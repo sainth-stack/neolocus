@@ -1,0 +1,10 @@
+.main-content{
+    overflow: auto;
+    overflow-x:hidden;
+    background-color: #FFF;
+    margin-top: 80px;
+}
+
+.new-sidebar{
+    margin-left: 230px;
+}
