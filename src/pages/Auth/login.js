@@ -9,14 +9,31 @@ import './styles.css'
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useGoogleLogin } from '@react-oauth/google';
+import { useUser } from "../context/userContext";
 
 export const Login = () => {
   const [loading, setLoading] = useState(false)
   const [toggle2, setToggle2] = useState(false)
   const [email, setEmail] = useState("info@desai.net")
   const [password, setPassword] = useState('Keypulse@123')
-  const [error,setError] = useState('')
+  const [error, setError] = useState('')
+  const { userData, setUserData } = useUser();
   const baseURL = "http://3.132.248.171:4500/login"
+  const googleLoginURL = "http://3.132.248.171:4500/googlelogin"
+
+  
+  const getUserData = async (userName) => {
+    try {
+      var formData = new FormData();
+      formData.append('user', userName);
+      const response = await axios.post('http://3.132.248.171:4500/get_user_details', formData);
+      console.log(response)
+      setUserData(response?.data?.paymentinfo)
+    } catch (error) {
+      console.error('Error fetching user info:', error);
+    }
+  };
+
 
   const navigate = useNavigate()
   const Login = (event) => {
@@ -27,22 +44,23 @@ export const Login = () => {
     var formData = new FormData();
     formData.append('username', email);
     formData.append('password', password);
-
+    formData.append('email', email);
     event.preventDefault()
     axios
       .post(baseURL, formData)
       .then((response) => {
 
         setLoading(false)
-         if(response.data=="Login Success"){
-        navigate('/start-design')
-        localStorage.setItem('token', response.data.token);
-        localStorage.setItem('userName', response.data.userName);
-         } else{
+        if (response.data == "Login Success") {
+          navigate('/start-design')
+          localStorage.setItem('username', email);
+          localStorage.setItem('email', email);
+          getUserData(email)
+        } else {
           setError(response.data)
           console.log('Login Failed')
           // window.alert("Incorrect Password")
-         }
+        }
       })
       .catch((err) => {
         console.log(err)
@@ -62,14 +80,56 @@ export const Login = () => {
     console.log('Logout Success');
   };
 
+  const getUserInfo = async (token) => {
+    try {
+      const response = await axios.get('https://www.googleapis.com/oauth2/v1/userinfo', {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      GoogleLogin(response.data)
+    } catch (error) {
+      console.error('Error fetching user info:', error);
+    }
+  };
+
+  const GoogleLogin = (data) => {
+    console.log(data)
+    var formData = new FormData();
+    formData.append('username', `${data.family_name}_${data.given_name}`);
+    formData.append('id', data.id);
+    formData.append('email', data.email);
+
+    axios
+      .post(googleLoginURL, formData)
+      .then((response) => {
+        console.log(response)
+        setLoading(false)
+        if (response.data == "Login Success" || response.data == "Registration Success") {
+          navigate('/start-design')
+          console.log(data)
+          localStorage.setItem('username', `${data.family_name}_${data.given_name}`);
+          localStorage.setItem('email', data.email);
+        } else {
+          setError(response.data)
+          console.log('Login Failed')
+          // window.alert("Incorrect Password")
+        }
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
 
   const login = useGoogleLogin({
-    onSuccess: tokenResponse => console.log(tokenResponse),
+    onSuccess: tokenResponse => {
+      getUserInfo(tokenResponse.access_token)
+    },
   });
 
   return (
-    <div className="container-fluid row m-0 p-0" style={{        background:'rgb(255 252 245)'    }}>
-      <div className="col-md-6 pt-4 pb-4" style={{ height: '90vh', display: 'flex', justifyContent: 'center', alignItems: 'center',background:'rgb(72, 136, 200)' }}>
+    <div className="container-fluid row m-0 p-0" style={{ background: 'rgb(255 252 245)' }}>
+      <div className="col-md-6 pt-4 pb-4" style={{ height: '90vh', display: 'flex', justifyContent: 'center', alignItems: 'center', background: 'rgb(72, 136, 200)' }}>
         <h5 className="text-white font-weight-bold mt-2" style={{ fontSize: '5.8rem', width: '600px' }} >Design the room of your dreams</h5>
       </div>
       <div className="col-md-6 col-xs-12 col-sm-12 text-center pt-lg-5 mt-lg-5">
@@ -134,8 +194,8 @@ export const Login = () => {
                   id="password"
                   name="password"
                   value={password}
-                  maxLength={16}
-                  minLength={8}
+                  // maxLength={16}
+                  // minLength={8}
                   required
                   onChange={(e) => setPassword(e.target.value)}
                 // onFocus={() => setMessage("")}
@@ -155,7 +215,7 @@ export const Login = () => {
                   )} */}
                 {/* <span className="error-message">{message}</span> */}
               </div>
-              <div style={{fontSize:'14px',color:'red',display:'flex',justifyContent:'flex-start',marginTop:'4px'}}>{error}</div>
+              <div style={{ fontSize: '14px', color: 'red', display: 'flex', justifyContent: 'flex-start', marginTop: '4px' }}>{error}</div>
               <div className="d-flex flex-row-reverse mb-4">
                 <Link to="#">
                   <span className="fs-12 cursor-pointer">
@@ -166,7 +226,7 @@ export const Login = () => {
               <button
                 className="font-weight-bold text-uppercase w-100 text-white border-0 login2"
                 style={{
-                  background:'rgb(72, 136, 200)',
+                  background: 'rgb(72, 136, 200)',
                   borderRadius: "40px",
                   height: "40px",
                 }}

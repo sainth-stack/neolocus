@@ -1,13 +1,13 @@
-import {Grid } from "@mui/material"
-import { useState } from "react";
-import leftImage from '../../../assets/images/neolocus/room.png'
+import { Grid } from "@mui/material"
+import { useEffect, useState } from "react";
+import leftImage from '../../../assets/images/neolocus/living.png'
 import living from '../../../assets/images/neolocus/living.png'
 import bedroom from '../../../assets/images/neolocus/bedroom.png'
 import modern from '../../../assets/images/neolocus/modern.png'
 import minimal from '../../../assets/images/neolocus/minimal.png'
 import contemporary from '../../../assets/images/neolocus/contempary.png'
 import traditional from '../../../assets/images/neolocus/traditional.png'
-import industrial from '../../../assets/images/neolocus/traditional.png'
+import industrial from '../../../assets/images/neolocus/industrial.png'
 
 import olive from '../../../assets/images/neolocus/colors/olive.png'
 import charcol from '../../../assets/images/neolocus/colors/charcol.png'
@@ -18,7 +18,7 @@ import historical from '../../../assets/images/neolocus/colors/historical.png'
 import axios from "axios";
 import VerticalSlider from './stepper'
 import './Main.css'
-import ImageLoader from "./imageContainer";
+import LinearWithValueLabel from "../../../components/loader/index";
 const GraphView = () => {
     const [search, setSearch] = useState('')
     const [question, setQuestion] = useState([
@@ -35,7 +35,6 @@ const GraphView = () => {
 
 
     const [file, setFile] = useState(null)
-    const [startChart, setStartChart] = useState(false)
     const [loading, setLoading] = useState(false)
     const [img, setImage] = useState(null)
     const handleFileChange = (event) => {
@@ -51,20 +50,47 @@ const GraphView = () => {
         number_of_room_designs: '',
         additional_instructions: ""
     })
-    console.log(data)
     const handleChange = ({ target: { name, value } }) => {
         let updatedData = { ...data };
         updatedData[name] = value;
         setData(updatedData);
     };
 
+    const [imgsLoaded, setImgsLoaded] = useState(false)
+    const [design, setDesign] = useState(false)
+    useEffect(() => {
+        if (img !== null) {
+            const loadImage = (image) => {
+                return new Promise((resolve, reject) => {
+                    const loadImg = new Image();
+                    loadImg.src = image;
+                    // wait 2 seconds to simulate loading time
+                    loadImg.onload = () =>
+                        setTimeout(() => {
+                            resolve(image);
+                        }, 2000);
+
+                    loadImg.onerror = (err) => reject(err);
+                });
+            };
+
+            Promise.all([loadImage(img)]) // Wrap the promise in an array
+                .then(() => setImgsLoaded(true))
+                .catch((err) => console.log("Failed to load images", err));
+        }
+    }, [img]);
+
     const handleUpload = async () => {
         var formData = new FormData();
-
-        Object.entries(data).forEach(([key, value]) => formData.append(key, value))
+        setDesign(true)
+        formData.append('selected_style', selData?.style);
+        formData.append('selected_room_type', selData?.room);
+        formData.append('selected_room_color', selData?.color);
+        formData.append('number_of_room_designs', selData?.count);
+        formData.append('additional_instructions', "");
         setLoading(true)
-
-
+        setImgsLoaded(false)
+        setImage(null)
         try {
             const response = await axios.post(
                 `http://3.132.248.171:4500/getImage`,
@@ -76,8 +102,7 @@ const GraphView = () => {
                 }
             );
             setLoading(false)
-            console.log(response)
-            setImage(response?.data)
+            setImage(response?.data?.image)
         } catch (err) {
             setLoading(false)
             console.log(err)
@@ -137,13 +162,16 @@ const GraphView = () => {
         { label: 'traditional', value: 'traditional' }
     ]
 
-
-    const [selData, setSelData] = useState({
-        room: '',
+    const inData = {
+        roomImage: "",
+        room: 'living room',
         style: "",
         color: '',
         count: ''
-    })
+    }
+
+    const [selData, setSelData] = useState(inData)
+
 
     const steps = [
         {
@@ -183,6 +211,9 @@ const GraphView = () => {
 
     const handleSelectImage = (item, type) => {
         const updata = { ...selData }
+        if (type == "room") {
+            updata["roomImage"] = item?.image
+        }
         updata[type] = item.text
         setSelData(updata)
     }
@@ -207,62 +238,97 @@ const GraphView = () => {
         setLoaded(true);
     };
 
+    const handleReset = () => {
+        setDesign(false);
+        setImgsLoaded(false);
+        setLoading(false);
+        setActiveStep(0);
+        setSelData(inData)
+    }
+
     return (
-        <Grid sx={{ display: 'flex', gap: '40px', padding: '40px 40px' }}>
-            <img src={leftImage} width={"50%"} height={'100%'} alt="image" style={{ borderRadius: '10px' }} />
-            <Grid style={{ width: '300px' }}>
-                <VerticalSlider {...{ activeStep, steps }} />
-            </Grid>
-            <Grid md={5} sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                width: '100%'
-            }}>
-                <div style={{ height: '500px' }}>
-                    {steps.map((item) => {
-                        if (item.id == activeStep + 1) {
-                            const isSelected = Object.keys(selData).filter((key) => key === item.type)
-                            const data = selData[isSelected]
-                            return (
-                                <div style={{ display: 'flex', flexDirection: 'column', position: 'relative' }}>
-                                    <span className="step-text">{item?.label}</span>
-                                    <span className="step-text">Choose your {item?.type}</span>
-                                    <div style={{ width: '500px' }}>
-                                        <div style={{ display: 'flex', gap: '20px', marginTop: '10px', maxWidth: '100%', overflowX: 'auto' }}>
-                                            {item.list?.map((itemc, index) => {
-                                                return (
-                                                    <>
-                                                        <div key={index} style={{ display: 'flex', flexDirection: 'column', gap: '10px', cursor: 'pointer', position: 'relative' }} onClick={() => handleSelectImage(itemc, item?.type)}>
-                                                            {item.type === "count" ? <div style={{ background: itemc.color, fontSize: '20px', textAlign: 'center', width: '100px', height: '100px', borderRadius: '10px', display: 'flex', justifyContent: 'center', alignItems: 'center', cursor: 'pointer' }} onClick={() => handleSelectImage(itemc, item?.type)}>{itemc.text}</div> :
-                                                                <img src={itemc?.image} alt="" width={100} height={100} style={{ borderRadius: '10px' }} />
-                                                            }
-                                                            {data === itemc.text && <div style={{ position: 'absolute', width: '100%', textAlign: 'center' }}>
-                                                                <div style={{ width: '100px', height: '100px', margin: '1%', backgroundColor: 'green', opacity: '0.4', borderRadius: '8px' }}></div>
-                                                                <div style={{ color: 'white', fontSize: '24px', padding: '4px', zIndex: 1, marginTop: '-35px', marginLeft: '-70px' }}>✓</div>
-                                                            </div>}
-                                                            {item.type !== 'count' && itemc.text}
-                                                        </div>
-                                                    </>
-                                                );
-                                            })}
+        <Grid>
+            {!design && <Grid md={5} sx={{ display: 'flex', gap: '40px', padding: '40px 40px' }}>
+                <img src={selData?.roomImage ? selData?.roomImage : leftImage} width={"40%"} height={'0%'} alt="image" style={{ borderRadius: '10px' }} />
+                <Grid md={2} style={{ width: '250px', marginLeft: '100px' }}>
+                    <VerticalSlider {...{ activeStep, steps }} />
+                </Grid>
+                <Grid md={5} sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    width: '100%'
+                }}>
+                    <div style={{ height: '500px' }}>
+                        {steps.map((item) => {
+                            if (item.id == activeStep + 1) {
+                                const isSelected = Object.keys(selData).filter((key) => key === item.type)
+                                const data = selData[isSelected]
+                                return (
+                                    <div style={{ display: 'flex', flexDirection: 'column', position: 'relative' }}>
+                                        <span className="step-text">{item?.label}</span>
+                                        <span className="step-text">Choose your {item?.type}</span>
+                                        <div style={{ width: '500px' }}>
+                                            <div style={{ display: 'flex', gap: '20px', marginTop: '10px', maxWidth: '100%', overflowX: 'auto' }}>
+                                                {item.list?.map((itemc, index) => {
+                                                    return (
+                                                        <>
+                                                            <div key={index} style={{ display: 'flex', flexDirection: 'column', gap: '10px', cursor: 'pointer', position: 'relative' }} onClick={() => handleSelectImage(itemc, item?.type)}>
+                                                                {item.type === "count" ? <div style={{ background: itemc.color, fontSize: '20px', textAlign: 'center', width: '100px', height: '100px', borderRadius: '10px', display: 'flex', justifyContent: 'center', alignItems: 'center', cursor: 'pointer' }} onClick={() => handleSelectImage(itemc, item?.type)}>{itemc.text}</div> :
+                                                                    <img src={itemc?.image} alt="" width={100} height={100} style={{ borderRadius: '10px' }} />
+                                                                }
+                                                                {data === itemc.text && <div style={{ position: 'absolute', width: '100%', textAlign: 'center' }}>
+                                                                    <div style={{ width: '100px', height: '100px', margin: '1%', backgroundColor: 'green', opacity: '0.4', borderRadius: '8px' }}></div>
+                                                                    <div style={{ color: 'white', fontSize: '24px', padding: '4px', zIndex: 1, marginTop: '-35px', marginLeft: '-70px' }}>✓</div>
+                                                                </div>}
+                                                                {item.type !== 'count' && itemc.text}
+                                                            </div>
+                                                        </>
+                                                    );
+                                                })}
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
 
-                            )
-                        }
-                    })}
-                </div>
+                                )
+                            }
+                        })}
+                    </div>
 
-                <div style={{ display: 'flex', width: '100%', gap: '40px' }}>
-                    <button className="back-button-text" onClick={() => prevStep()}>
-                        BACK
-                    </button>
-                    <button className="next-button-text" onClick={() => nextStep()}>
-                        {activeStep > 2 ? "Get Design" : "NEXT"}
-                    </button>
-                </div>
+                    <div style={{ display: 'flex', width: '100%', gap: '40px' }}>
+                        <button className="back-button-text" onClick={() => prevStep()}>
+                            BACK
+                        </button>
+                        <button className="next-button-text" onClick={() => activeStep < 3 ? nextStep() : handleUpload()}>
+                            {activeStep > 2 ? "Get Design" : "NEXT"}
+                        </button>
+                    </div>
 
+                </Grid>
+            </Grid >}
+
+            <Grid item md={7} padding={"10px"} sx={{
+                width: "100%",
+                height: '88vh',
+                overflow: 'auto',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center'
+            }}>
+                {(loading || !imgsLoaded) ? <LinearWithValueLabel loading={loading || !imgsLoaded} /> : <div>
+                    {/* <h2>Deisgn</h2> */}
+                    {(img !== null && imgsLoaded) &&
+                        <div style={{ width: '100%', display: 'flex', justifyContent: 'center', flexDirection: 'column' }}>
+                            <img
+                                src={img}
+                                alt="new"
+                                style={{ width: '100%' }}
+                            />
+                            <button className="btn btn-primary" onClick={() => { handleReset() }} style={{ display: 'flex', justifyContent: 'center', marginTop: '10px', width: 'fit-content' }}>Regenerate</button>
+                        </div>
+
+                    }
+                </div>}
             </Grid>
         </Grid>
     )

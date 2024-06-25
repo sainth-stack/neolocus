@@ -9,11 +9,11 @@ import PaymentCard from './payent';
 const stripePromise = loadStripe('your-publishable-key-here');
 
 const Pricing = () => {
-    const[openPayment,setOpenPayment] = useState('')
+    const [openPayment, setOpenPayment] = useState({})
     const items = [
         {
             name: 'Free Plan',
-            value: '$0',
+            value: '0Rs',
             btnText: 'Current Plan',
             desc: "No credit card required",
             list: [
@@ -25,7 +25,7 @@ const Pricing = () => {
         },
         {
             name: 'Basic Plan',
-            value: '$5 /per month',
+            value: '499Rs /per month',
             btnText: 'Choose Basic Plan',
             desc: "Cancel Anytime",
             mostPopular: true,
@@ -38,11 +38,12 @@ const Pricing = () => {
         },
         {
             name: 'Pro Plan',
-            value: '$10 /per month',
+            value: '3999Rs /per month',
             btnText: 'Choose Pro Plan',
+            mostPopular: false,
             desc: "Cancel Anytime",
             list: [
-                { text: '200 generations per month', status: true },
+                { text: '500 generations per month', status: true },
                 { text: 'High resolution outputs', status: true },
                 { text: 'DISAI watermark free', status: true },
                 { text: 'Commercial License', status: true }
@@ -50,10 +51,14 @@ const Pricing = () => {
         }
     ];
 
+    const handleCheckout = async (item) => {
+        setOpenPayment({
+            price: item.mostPopular ? 100 : 200,
+            plan: item.mostPopular ? 'basic' : 'popular',
+        })
+    };
+
     const PricingCard = ({ item }) => {
-        const handleCheckout = async (priceId) => {
-            setOpenPayment(true)
-        };
 
         return (
             <div style={{ padding: '40px', display: 'flex', flexDirection: 'column', gap: '10px', border: item.mostPopular && '2px solid rgb(72, 136, 200)', marginTop: item.mostPopular && "-20px" }} className="card">
@@ -61,7 +66,7 @@ const Pricing = () => {
                 <div style={{ fontSize: '26px', fontWeight: 700 }}>{item.value}</div>
                 {item.mostPopular && <div style={{ background: 'rgb(72, 136, 200)', color: 'white', textAlign: 'center', borderRadius: '8px', width: '110px', fontSize: '16px', position: 'absolute', marginTop: '-50px', marginLeft: '54px' }}>Most Popular</div>}
                 <button
-                    onClick={() => item.btnText !== 'Current Plan' && handleCheckout(item.priceId)}
+                    onClick={() => item.btnText !== 'Current Plan' && handleCheckout(item)}
                     style={{ border: 'none', background: item.btnText === "Current Plan" ? 'rgb(72, 136, 200)' : 'rgb(241 241 241)', padding: '8px 10px', color: item.btnText === "Current Plan" ? 'white' : 'rgb(72, 136, 200)', fontSize: '20px', borderRadius: '40px' }}>
                     {item.btnText}
                 </button>
@@ -87,7 +92,7 @@ const Pricing = () => {
                     ))}
                 </div>
             </div>
-            <PaymentCard  openPayment={openPayment}/>
+            <PaymentCard openPayment={openPayment} />
         </Elements>
     );
 };

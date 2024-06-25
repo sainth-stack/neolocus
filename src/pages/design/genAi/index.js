@@ -57,9 +57,37 @@ const GenAi = () => {
         selected_room_type: "",
         number_of_room_designs: '',
         additional_instructions: "",
-        username:'freetest'
+        username: localStorage.getItem('username')
     })
-    console.log(data)
+
+
+    const [imgsLoaded, setImgsLoaded] = useState(false)
+
+    useEffect(() => {
+        if (img !== null) {
+            const loadImage = (image) => {
+                return new Promise((resolve, reject) => {
+                    const loadImg = new Image();
+                    loadImg.src = image;
+                    // wait 2 seconds to simulate loading time
+                    loadImg.onload = () =>
+                        setTimeout(() => {
+                            resolve(image);
+                        }, 2000);
+
+                    loadImg.onerror = (err) => reject(err);
+                });
+            };
+
+            Promise.all([loadImage(img)]) // Wrap the promise in an array
+                .then(() => {setImgsLoaded(true);setLoading(false)})
+                .catch((err) => console.log("Failed to load images", err));
+        }
+    }, [img]);
+
+
+
+
     const handleChange = ({ target: { name, value } }) => {
         let updatedData = { ...data };
         updatedData[name] = value;
@@ -71,8 +99,8 @@ const GenAi = () => {
 
         Object.entries(data).forEach(([key, value]) => formData.append(key, value))
         setLoading(true)
-
-
+        setImgsLoaded(false)
+        setImage(null)
         try {
             const response = await axios.post(
                 `http://3.132.248.171:4500/getImage`,
@@ -83,9 +111,8 @@ const GenAi = () => {
                     }
                 }
             );
-            setLoading(false)
-            console.log(response)
-            setImage(response?.data)
+            // setLoading(false)
+            setImage(response?.data?.image)
         } catch (err) {
             setLoading(false)
             console.log(err)
@@ -210,23 +237,13 @@ const GenAi = () => {
     };
 
     const [loaded, setLoaded] = useState(false);
-
     const handleImageLoad = () => {
         setLoaded(true);
     };
 
-    useEffect(() => {
-        const image = new Image();
-        image.src = image;
-        image.onload = () => {
-            setLoaded(true);
-            setImage(image);
-        };
-    }, [img]);
-
     return (
         <Grid display={"flex"}>
-            <Grid item md={5} style={{ borderRight: '1px solid grey', width: '450px', height: 'calc(100vh - 80px)', }}>
+            <Grid item md={5} style={{ borderRight: '1px solid grey', width: '450px', height: 'calc(100vh - 81px)', }}>
                 <div style={{ padding: '12px' }}>
                     {/* <h1 style={{ fontSize: '20px', fontWeight: 500 }}>Upload File</h1> */}
                     <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'start' }}>
@@ -322,14 +339,14 @@ const GenAi = () => {
                 justifyContent: 'center',
                 alignItems: 'center'
             }}>
-                {(loading || loaded) ? <LinearWithValueLabel loading={loading} /> : <div>
+                {(loading && !imgsLoaded) ? <LinearWithValueLabel loading={loading || !imgsLoaded} /> : <div>
                     {/* <h2>Deisgn</h2> */}
-                    {img !== null &&
+                    {(img !== null && imgsLoaded) &&
                         <img
-                        src={img}
-                        alt="new"
-                        style={{ width: '100%' }}
-                    />
+                            src={img}
+                            alt="new"
+                            style={{ width: '100%' }}
+                        />
                     }
                 </div>}
             </Grid>

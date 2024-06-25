@@ -1,0 +1,59 @@
+.billing-container {
+    text-align: center;
+    background-color: #FAF7F2; /* Match the background color */
+    padding: 20px;
+    font-family: Arial, sans-serif; /* Adjust the font as needed */
+    height: 100vh;
+}
+
+.billing-title {
+    color: rgb(72, 136, 200); /* Match the dark green color */
+    margin-bottom: 20px;
+}
+
+.billing-box {
+    background-color: rgb(72, 136, 200);
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    display: inline-block;
+    text-align: left;
+    /* width: 50%; */
+}
+.billing-header{
+    font-size: 30px;
+}
+
+.billing-info {
+    margin-bottom: 20px;
+}
+
+.billing-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content:center;
+}
+
+.billing-buttons button {
+    background-color: white;
+    color: rgb(72, 136, 200);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.design-prompt {
+    margin-top: 40px;
+}
+
+.design-btn {
+    background-color: rgb(72, 136, 200);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+}
