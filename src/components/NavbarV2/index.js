@@ -97,7 +97,8 @@ function NavbarV2() {
             id="logo_RL"
             alt="logo"
           />
-          {isLogin && <Tabs
+          {isLogin &&
+           <Tabs
             value={currentTab}
             onChange={handleTabChange}
             sx={{

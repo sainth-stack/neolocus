@@ -107,7 +107,8 @@ const GenAi = () => {
                 formData,
                 {
                     headers: {
-                        "Content-Type": "multipart/form-data"
+                        "Content-Type": "multipart/form-data",
+                        // token:localStorage.getItem('token')
                     }
                 }
             );

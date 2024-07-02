@@ -21,7 +21,7 @@ export const Login = () => {
   const baseURL = "http://3.132.248.171:4500/login"
   const googleLoginURL = "http://3.132.248.171:4500/googlelogin"
 
-  
+
   const getUserData = async (userName) => {
     try {
       var formData = new FormData();
@@ -51,10 +51,12 @@ export const Login = () => {
       .then((response) => {
 
         setLoading(false)
-        if (response.data == "Login Success") {
+        console.log(response)
+        if (response.status == 200) {
           navigate('/start-design')
           localStorage.setItem('username', email);
           localStorage.setItem('email', email);
+          localStorage.setItem('token', `${response.data}`);
           getUserData(email)
         } else {
           setError(response.data)
@@ -94,9 +96,8 @@ export const Login = () => {
   };
 
   const GoogleLogin = (data) => {
-    console.log(data)
     var formData = new FormData();
-    formData.append('username', `${data.family_name}_${data.given_name}`);
+    formData.append('username', `${data.name.replaceAll(' ', '_')}`);
     formData.append('id', data.id);
     formData.append('email', data.email);
 
@@ -105,11 +106,12 @@ export const Login = () => {
       .then((response) => {
         console.log(response)
         setLoading(false)
-        if (response.data == "Login Success" || response.data == "Registration Success") {
+        if (response.status== 200) {
           navigate('/start-design')
           console.log(data)
-          localStorage.setItem('username', `${data.family_name}_${data.given_name}`);
+          localStorage.setItem('username', `${data.name.replaceAll(' ', '_')}`);
           localStorage.setItem('email', data.email);
+          localStorage.setItem('token', `${response.data}`);
         } else {
           setError(response.data)
           console.log('Login Failed')
