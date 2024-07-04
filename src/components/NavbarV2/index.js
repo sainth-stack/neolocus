@@ -42,7 +42,7 @@ function NavbarV2() {
       // navigate('/start-design');
     } else {
       setIsLogin(false);
-      navigate('/login');
+      // navigate('/login');
     }
   }, [userName, navigate]);
 
