@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useGoogleLogin } from '@react-oauth/google';
 import { useUser } from "../context/userContext";
+import { baseURL } from "../const";
 
 export const Login = () => {
   const [loading, setLoading] = useState(false)
@@ -18,15 +19,14 @@ export const Login = () => {
   const [password, setPassword] = useState('Keypulse@123')
   const [error, setError] = useState('')
   const { userData, setUserData } = useUser();
-  const baseURL = "http://3.132.248.171:4500/login"
-  const googleLoginURL = "http://3.132.248.171:4500/googlelogin"
+  const googleLoginURL = `${baseURL}/googlelogin`
 
 
   const getUserData = async (userName) => {
     try {
       var formData = new FormData();
       formData.append('user', userName);
-      const response = await axios.post('http://3.132.248.171:4500/get_user_details', formData);
+      const response = await axios.post(`${baseURL}/get_user_details`, formData);
       console.log(response)
       setUserData(response?.data?.paymentinfo)
     } catch (error) {
@@ -47,12 +47,12 @@ export const Login = () => {
     formData.append('email', email);
     event.preventDefault()
     axios
-      .post(baseURL, formData)
+      .post(`${baseURL}/login`, formData)
       .then((response) => {
 
         setLoading(false)
         console.log(response)
-        if (response.status == 200) {
+        if (response.data === "Login Success") {
           navigate('/start-design')
           localStorage.setItem('username', email);
           localStorage.setItem('email', email);
@@ -106,7 +106,7 @@ export const Login = () => {
       .then((response) => {
         console.log(response)
         setLoading(false)
-        if (response.status== 200) {
+        if (response.status == 200) {
           navigate('/start-design')
           console.log(data)
           localStorage.setItem('username', `${data.name.replaceAll(' ', '_')}`);

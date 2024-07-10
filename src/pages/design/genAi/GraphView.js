@@ -88,6 +88,8 @@ const GraphView = () => {
         formData.append('selected_room_color', selData?.color);
         formData.append('number_of_room_designs', selData?.count);
         formData.append('additional_instructions', "");
+        formData.append('user_name', localStorage.getItem('username'));
+
         setLoading(true)
         setImgsLoaded(false)
         setImage(null)

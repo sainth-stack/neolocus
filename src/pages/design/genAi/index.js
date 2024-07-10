@@ -57,7 +57,7 @@ const GenAi = () => {
         selected_room_type: "",
         number_of_room_designs: '',
         additional_instructions: "",
-        username: localStorage.getItem('username')
+        user_name: localStorage.getItem('username')
     })
 
 

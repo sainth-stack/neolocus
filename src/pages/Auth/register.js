@@ -7,13 +7,14 @@ import { LoadingIndicator } from "../../components/loader";
 import { useNavigate } from "react-router-dom";
 import './styles.css'
 import axios from 'axios'
-const baseURL = "http://3.132.248.171:4500/register"
+import { baseURL } from "../const";
 export const Register = () => {
   const [loading, setLoading] = useState(false)
   const [toggle2, setToggle2] = useState(false)
   const [userName, setUsername] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
   const [password2, setPassword2] = useState('')
   const navigate = useNavigate()
   const Register = (event) => {
@@ -25,20 +26,24 @@ export const Register = () => {
     formData.append('password1', password);
     formData.append('password2', password2);
     axios
-      .post(baseURL, formData)
+      .post(`${baseURL}/register`, formData)
       .then((response) => {
         setLoading(false)
-        console.log(response)
-        navigate('/login')
+        if (response.data == "Login Success") {
+          navigate('/login')
+        } else {
+          setError(response.data)
+        }
       })
       .catch((err) => {
+        setError(err.data)
         setLoading(false)
         console.log(err)
       })
   }
   return (
     <div className="container-fluid row m-0 p-0" style={{ background: 'rgb(255 252 245)' }}>
-      <div className="col-md-6 pt-4 pb-4" style={{ height: '90vh', display: 'flex', justifyContent: 'center', alignItems: 'center',background:'rgb(72, 136, 200)' }}>
+      <div className="col-md-6 pt-4 pb-4" style={{ height: '90vh', display: 'flex', justifyContent: 'center', alignItems: 'center', background: 'rgb(72, 136, 200)' }}>
         <h5 className="text-white font-weight-bold mt-2" style={{ fontSize: '5.8rem', width: '600px' }} >Design the room of your dreams</h5>
       </div>
       <div className="col-md-6 col-xs-12 col-sm-12 text-center pt-lg-5 mt-lg-5">
@@ -156,7 +161,7 @@ export const Register = () => {
                   )} */}
                 {/* <span className="error-message">{message}</span> */}
               </div>
-
+              <div style={{ fontSize: '14px', color: 'red', display: 'flex', justifyContent: 'flex-start', marginTop: '4px' }}>{error}</div>
               <div className="d-flex flex-row-reverse mb-4">
                 {/* <Link to="/auth/forgotpassword">
                     <span className="fs-12 cursor-pointer">
@@ -167,7 +172,7 @@ export const Register = () => {
               <button
                 className="font-weight-bold text-uppercase w-100 text-white border-0 login2"
                 style={{
-                  background:'rgb(72, 136, 200)',
+                  background: 'rgb(72, 136, 200)',
                   borderRadius: "40px",
                   height: "40px",
                 }}

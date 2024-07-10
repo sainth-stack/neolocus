@@ -1,10 +1,10 @@
 import React from "react";
 import './style.css'
-import { Outlet, Navigate,  } from "react-router-dom"
+import { Outlet, Navigate, } from "react-router-dom"
 import NavbarV2 from "../components/NavbarV2";
 export function AdminLayout(props) {
   const isAuthenticated = () => {
-    const accessToken = localStorage.getItem("token")
+    const accessToken = localStorage.getItem("username")
     return true
   }
   return (
