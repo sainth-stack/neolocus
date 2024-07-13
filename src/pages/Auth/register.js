@@ -29,7 +29,7 @@ export const Register = () => {
       .post(`${baseURL}/register`, formData)
       .then((response) => {
         setLoading(false)
-        if (response.data == "Login Success") {
+        if (response.data == "Success") {
           navigate('/login')
         } else {
           setError(response.data)

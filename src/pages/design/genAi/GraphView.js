@@ -19,6 +19,7 @@ import axios from "axios";
 import VerticalSlider from './stepper'
 import './Main.css'
 import LinearWithValueLabel from "../../../components/loader/index";
+import { baseURL } from "../../../components/NavbarV2";
 const GraphView = () => {
     const [search, setSearch] = useState('')
     const [question, setQuestion] = useState([
@@ -95,7 +96,7 @@ const GraphView = () => {
         setImage(null)
         try {
             const response = await axios.post(
-                `http://3.132.248.171:4500/getImage`,
+                `${baseURL}/getImage`,
                 formData,
                 {
                     headers: {

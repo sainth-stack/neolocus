@@ -7,7 +7,7 @@ import avatar from '../../assets/svg/avatar.svg';
 import './styles.css'
 import axios from "axios";
 import { useUser } from "../../pages/context/userContext";
-
+export const baseURL='https://otamat.com/api'
 function NavbarV2() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -54,7 +54,7 @@ function NavbarV2() {
     try {
       const formData = new FormData();
       formData.append('user', userName);
-      const response = await axios.post('http://3.132.248.171:4500/get_user_details', formData);
+      const response = await axios.post(`${baseURL}/get_user_details`, formData);
       console.log(response);
       setUserData(response?.data?.paymentinfo);
     } catch (error) {

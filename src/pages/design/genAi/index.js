@@ -24,6 +24,7 @@ import axios from "axios";
 import './Main.css'
 import ImageLoader from "./imageContainer";
 import LinearWithValueLabel from "../../../components/loader/index";
+import { baseURL } from "../../../components/NavbarV2";
 // import gemini_icon from '../../assets/svg/gemini_icon.png'
 const GenAi = () => {
 
@@ -103,7 +104,7 @@ const GenAi = () => {
         setImage(null)
         try {
             const response = await axios.post(
-                `http://3.132.248.171:4500/getImage`,
+                `${baseURL}/getImage`,
                 formData,
                 {
                     headers: {

@@ -52,7 +52,7 @@ export const Login = () => {
 
         setLoading(false)
         console.log(response)
-        if (response.data === "Login Success") {
+        if (response.data === "Success") {
           navigate('/start-design')
           localStorage.setItem('username', email);
           localStorage.setItem('email', email);
