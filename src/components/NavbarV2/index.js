@@ -44,7 +44,7 @@ function NavbarV2() {
       setIsLogin(false);
       // navigate('/login');
     }
-  }, [userName, navigate]);
+  }, []);
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);

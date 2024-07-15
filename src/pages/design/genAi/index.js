@@ -25,6 +25,7 @@ import './Main.css'
 import ImageLoader from "./imageContainer";
 import LinearWithValueLabel from "../../../components/loader/index";
 import { baseURL } from "../../../components/NavbarV2";
+import { useUser } from "../../context/userContext";
 // import gemini_icon from '../../assets/svg/gemini_icon.png'
 const GenAi = () => {
 
@@ -40,6 +41,7 @@ const GenAi = () => {
         handleGetAnswer(updatedata)
         setSearch('')
     }
+    const { userData, setUserData } = useUser();
 
 
     const [file, setFile] = useState(null)
@@ -56,9 +58,10 @@ const GenAi = () => {
         selected_style: '',
         selected_room_color: "",
         selected_room_type: "",
-        number_of_room_designs: '',
+        number_of_room_designs: 1,
         additional_instructions: "",
-        user_name: localStorage.getItem('username')
+        user_name: localStorage.getItem('username'),
+        email: ""
     })
 
 
@@ -81,7 +84,7 @@ const GenAi = () => {
             };
 
             Promise.all([loadImage(img)]) // Wrap the promise in an array
-                .then(() => {setImgsLoaded(true);setLoading(false)})
+                .then(() => { setImgsLoaded(true); setLoading(false) })
                 .catch((err) => console.log("Failed to load images", err));
         }
     }, [img]);
@@ -93,6 +96,18 @@ const GenAi = () => {
         let updatedData = { ...data };
         updatedData[name] = value;
         setData(updatedData);
+    };
+
+    const getUserInfo = async () => {
+        try {
+            const userName = localStorage.getItem('username');
+            const formData = new FormData();
+            formData.append('user', userName);
+            const response = await axios.post(`${baseURL}/get_user_details`, formData);
+            setUserData(response?.data?.paymentinfo);
+        } catch (error) {
+            console.error('Error fetching user info:', error);
+        }
     };
 
     const handleUpload = async () => {
@@ -114,6 +129,7 @@ const GenAi = () => {
                 }
             );
             // setLoading(false)
+            getUserInfo()
             setImage(response?.data?.image)
         } catch (err) {
             setLoading(false)
@@ -252,7 +268,7 @@ const GenAi = () => {
                         {/* <input type="file" onChange={(e) => handleFileChange(e)} /> */}
                         <div style={{ marginTop: '10px' }}>
                             <div>
-                                <lable>User Input</lable>
+                                <lable>Prompt</lable>
                                 <input style={{ padding: '6px 8px' }} name="additional_instructions" onChange={handleChange} value={data.additional_instructions} />
                             </div>
                         </div>
@@ -312,8 +328,8 @@ const GenAi = () => {
                         </div>
                         <div style={{ marginTop: '10px' }}>
                             <div>
-                                <lable>Number of Designs</lable>
-                                <select id="connection-name" onChange={handleChange} name='number_of_room_designs' value={data.number_of_room_designs} >
+                                <lable>Email</lable>
+                                {/* <select id="connection-name" onChange={handleChange} name='number_of_room_designs' value={data.number_of_room_designs} >
                                     {data3.map(option => (
                                         <option key={option.label} style={{
                                             padding: '8px',
@@ -325,7 +341,8 @@ const GenAi = () => {
                                             {option.label}
                                         </option>
                                     ))}
-                                </select>
+                                </select> */}
+                                <input style={{ padding: '6px 8px' }} name="email" onChange={handleChange} value={data.email} />
                             </div>
                         </div>
                         <button type="submit" id="uploadButton" class="btn btn-primary" onClick={() => handleUpload()} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '10px' }}>Submit</button>

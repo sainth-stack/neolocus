@@ -13,7 +13,7 @@ const Pricing = () => {
     const items = [
         {
             name: 'Free Plan',
-            value: '0Rs',
+            value: '$0',
             btnText: 'Current Plan',
             desc: "No credit card required",
             list: [
@@ -25,7 +25,7 @@ const Pricing = () => {
         },
         {
             name: 'Basic Plan',
-            value: '499Rs /per month',
+            value: '$5 /per month',
             btnText: 'Choose Basic Plan',
             desc: "Cancel Anytime",
             mostPopular: true,
@@ -38,7 +38,7 @@ const Pricing = () => {
         },
         {
             name: 'Pro Plan',
-            value: '3999Rs /per month',
+            value: '$10 /per month',
             btnText: 'Choose Pro Plan',
             mostPopular: false,
             desc: "Cancel Anytime",
