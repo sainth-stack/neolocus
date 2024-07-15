@@ -327,7 +327,7 @@ const GraphView = () => {
                                 alt="new"
                                 style={{ width: '100%' }}
                             />
-                            <button className="btn btn-primary" onClick={() => { handleReset() }} style={{ display: 'flex', justifyContent: 'center', marginTop: '10px', width: 'fit-content' }}>Regenerate</button>
+                            <button className="btn btn-primary" onClick={() => { handleReset() }} style={{ display: 'flex', justifyContent: 'center', marginTop: '10px', width: 'fit-content' }}>Email Me</button>
                         </div>
 
                     }
