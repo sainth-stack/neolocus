@@ -66,7 +66,6 @@ const GenAi = () => {
 
 
     const [imgsLoaded, setImgsLoaded] = useState(false)
-
     useEffect(() => {
         if (img !== null) {
             const loadImage = (image) => {
@@ -345,7 +344,11 @@ const GenAi = () => {
                                 <input style={{ padding: '6px 8px' }} name="email" onChange={handleChange} value={data.email} />
                             </div>
                         </div>
-                        <button type="submit" id="uploadButton" class="btn btn-primary" onClick={() => handleUpload()} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '10px' }}>Submit</button>
+                        <div style={{
+                            
+                        }}>
+                            <button type="submit" title={(userData?.length > 2 && userData[2] > 0) ? "" :"Upgrade to premium to get more credits "} id="uploadButton" class="btn btn-primary" disabled={(userData?.length > 2 && userData[2] > 0) ? false : true} onClick={() => handleUpload()} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '10px'}} >Submit</button>
+                        </div>
                     </div>
                 </div>
             </Grid>
