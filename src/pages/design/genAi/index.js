@@ -269,7 +269,7 @@ const GenAi = () => {
                         <div style={{ marginTop: '10px' }}>
                             <div>
                                 <lable>Prompt</lable>
-                                <input style={{ padding: '6px 8px' }} name="additional_instructions" onChange={handleChange} value={data.additional_instructions} />
+                                <textarea className="textareaclass" style={{ padding: '6px 8px' }} name="additional_instructions" onChange={handleChange} value={data.additional_instructions} />
                             </div>
                         </div>
                         <div style={{ marginTop: '10px' }}>

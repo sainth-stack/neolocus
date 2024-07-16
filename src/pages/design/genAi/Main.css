@@ -173,14 +173,19 @@ label {
 }
 
 input,
-select {
+select,
+textarea {
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 5px;
     width: 350px;
 }
 
-.back-button-text{
+.textareaclass {
+   outline: none;
+}
+
+.back-button-text {
     width: 50%;
     height: 48px;
     padding: 9px;
@@ -194,7 +199,7 @@ select {
     color: white;
 }
 
-.next-button-text{
+.next-button-text {
     width: 50%;
     height: 48px;
     color: white;
@@ -208,7 +213,7 @@ select {
     justify-content: center;
 }
 
-.step-text{
+.step-text {
     font-size: 24px;
     color: rgb(81, 96, 115);
     font-weight: 700;
