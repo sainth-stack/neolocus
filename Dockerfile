@@ -19,8 +19,8 @@ RUN npm run build
 # Install serve globally to serve the build
 RUN npm install -g serve
 
-# Start the app
-CMD ["serve", "-s", "build"]
-
 # Expose the port the app runs on
-EXPOSE 3000
+EXPOSE 4000
+
+# Start the app on port 4000
+CMD ["serve", "-s", "build", "-l", "4000"]
