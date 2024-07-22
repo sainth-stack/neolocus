@@ -16,19 +16,19 @@ jobs:
         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
     
       - name: Build Docker Image
-        run: docker build -t integrationninjas/reactjs-app .
+        run: docker build -t sainath521/reactjs-app .
 
       - name: Publish image to Docker Hub
-        run: docker push integrationninjas/reactjs-app:latest   
+        run: docker push sainath521/reactjs-app:latest   
 
   deploy: 
     needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Pull image from docker hub
-        run: docker pull integrationninjas/reactjs-app:latest 
+        run: docker pull sainath521/reactjs-app:latest 
       - name: Delete Old Container
         run: docker rm -f reactContainer
       - name: Run docker container
-        run: docker run -d -p 4000:80 --name reactContainer integrationninjas/reactjs-app   
+        run: docker run -d -p 4000:80 --name reactContainer sainath521/reactjs-app   
     
