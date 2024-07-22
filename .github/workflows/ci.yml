@@ -40,7 +40,7 @@ jobs:
             sudo docker pull sainath521/reactjs-app:latest
 
             # Stop the existing PM2 process if it's running
-            pm2 stop react-app || true
+            sudo su -c "pm2 stop react-app" -s /bin/sh ubuntu || true
 
             # Remove the old container if it exists
             sudo docker rm -f reactContainer || true
@@ -49,12 +49,11 @@ jobs:
             sudo docker run -d --name reactContainer -v /home/ubuntu/neolocus:/usr/src/app sainath521/reactjs-app:latest
 
             # Start the application using PM2
-            cd /home/ubuntu/neolocus
-            pm2 start /home/ubuntu/neolocus --name react-app -i max
+            sudo su -c "cd /home/ubuntu/neolocus && pm2 start /home/ubuntu/neolocus --name react-app -i max" -s /bin/sh ubuntu
 
             # Save the PM2 process list
-            pm2 save
+            sudo su -c "pm2 save" -s /bin/sh ubuntu
 
             # Ensure PM2 restarts on reboot
-            pm2 startup systemd -u ubuntu --hp /home/ubuntu
+            sudo su -c "pm2 startup systemd -u ubuntu --hp /home/ubuntu" -s /bin/sh ubuntu
           EOF
