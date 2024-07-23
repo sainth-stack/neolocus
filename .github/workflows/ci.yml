@@ -33,10 +33,10 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
 
-      - name: Pull image from Docker Hub and deploy on EC2
+      - name: Deploy to EC2
         run: |
           ssh -o StrictHostKeyChecking=no ubuntu@18.143.174.1 << 'EOF'
-            sudo -i bash -c '
+            sudo bash -c "
               # Stop the existing PM2 process if it's running
               pm2 stop react-app || true
 
@@ -57,5 +57,5 @@ jobs:
 
               # Ensure PM2 restarts on reboot
               pm2 startup systemd -u ubuntu --hp /home/ubuntu
-            '
+            "
           EOF
