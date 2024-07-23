@@ -36,7 +36,7 @@ jobs:
       - name: Pull image from Docker Hub and deploy on EC2
         run: |
           ssh -o StrictHostKeyChecking=no ubuntu@18.143.174.1 << 'EOF'
-            sudo -i << 'EOC'
+            sudo -i bash << 'EOC'
               # Stop the existing PM2 process if it's running
               pm2 stop react-app || true
 
