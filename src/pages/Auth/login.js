@@ -240,7 +240,7 @@ export const Login = () => {
             </form>
             <div className="account2 mt-2">{"Don't Have An Account?"}</div>
             <Link to="/register" className="text-decoration-none register2">
-              <span>  {"Register"}</span>
+              <span>  {"Signup"}</span>
             </Link>
           </div>
         </div>
