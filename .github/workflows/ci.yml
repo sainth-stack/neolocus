@@ -36,7 +36,9 @@ jobs:
       - name: Pull image from Docker Hub and deploy on EC2
         run: |
           ssh -o StrictHostKeyChecking=no ubuntu@18.143.174.1 << 'EOF'
-            docker pull sainath521/reactjs-app:latest
-            docker rm -f reactContainer || true
-            docker run -d -p 4000:80 --name reactContainer sainath521/reactjs-app:latest
-EOF
+            sudo su - << 'EOC'
+              docker pull sainath521/reactjs-app:latest
+              docker rm -f reactContainer || true
+              docker run -d -p 4000:80 --name reactContainer sainath521/reactjs-app:latest
+            EOC
+          EOF
