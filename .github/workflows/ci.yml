@@ -57,5 +57,4 @@ jobs:
 
               # Ensure PM2 restarts on reboot
               pm2 startup systemd -u ubuntu --hp /home/ubuntu
-            EOC
-          EOF
+            EOF
