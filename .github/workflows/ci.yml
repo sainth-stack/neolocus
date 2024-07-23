@@ -33,31 +33,10 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
 
-      - name: Deploy application to EC2
+      - name: Pull image from Docker Hub and deploy on EC2
         run: |
           ssh -o StrictHostKeyChecking=no ubuntu@18.143.174.1 << 'EOF'
-            # Pull the latest image
-            sudo docker pull sainath521/reactjs-app:latest
-
-            # Ensure that PM2 commands are run with the root user's environment
-            sudo su - root <<EOF
-            # Stop the existing PM2 process if it's running
-            pm2 stop react-app || true
-
-            # Remove the old container if it exists
+            docker pull sainath521/reactjs-app:latest
             docker rm -f reactContainer || true
-
-            # Run a new container
-            docker run -d --name reactContainer -v /home/ubuntu/neolocus:/usr/src/app sainath521/reactjs-app:latest
-
-            # Start the application using PM2
-            cd /home/ubuntu/neolocus
-            pm2 start /home/ubuntu/neolocus --name react-app -i max
-
-            # Save the PM2 process list
-            pm2 save
-
-            # Ensure PM2 restarts on reboot
-            pm2 startup systemd -u ubuntu --hp /home/ubuntu
-            EOF
-
+            docker run -d -p 4000:80 --name reactContainer sainath521/reactjs-app:latest
+EOF
