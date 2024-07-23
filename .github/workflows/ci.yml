@@ -14,7 +14,7 @@ jobs:
 
       - name: Login to Docker Hub
         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
-    
+
       - name: Build Docker Image
         run: docker build -t sainath521/reactjs-app .
 
@@ -36,7 +36,7 @@ jobs:
       - name: Pull image from Docker Hub and deploy on EC2
         run: |
           ssh -o StrictHostKeyChecking=no ubuntu@18.143.174.1 << 'EOF'
-            sudo -i bash << 'EOC'
+            sudo -i bash -c '
               # Stop the existing PM2 process if it's running
               pm2 stop react-app || true
 
@@ -57,5 +57,5 @@ jobs:
 
               # Ensure PM2 restarts on reboot
               pm2 startup systemd -u ubuntu --hp /home/ubuntu
-            EOC
+            '
           EOF
