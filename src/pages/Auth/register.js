@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { LoadingIndicator } from "../../components/loader";
 import { useNavigate } from "react-router-dom";
 import './styles.css'
+import bedroom from '../../assets/images/neolocus/bedroom.png'
 import axios from 'axios'
 import { baseURL } from "../const";
 export const Register = () => {
@@ -43,7 +44,13 @@ export const Register = () => {
   }
   return (
     <div className="container-fluid row m-0 p-0" style={{ background: 'rgb(255 252 245)' }}>
-      <div className="col-md-6 pt-4 pb-4" style={{ height: '90vh', display: 'flex', justifyContent: 'center', alignItems: 'center', background: 'rgb(72, 136, 200)' }}>
+      <div className="col-md-6 pt-4 pb-4" style={{
+        height: '90vh', display: 'flex', justifyContent: 'center', alignItems: 'center',
+        backgroundImage: `url(${bedroom})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}
+      >
         <h5 className="text-white font-weight-bold mt-2" style={{ fontSize: '5.8rem', width: '600px' }} >Design the room of your dreams</h5>
       </div>
       <div className="col-md-6 col-xs-12 col-sm-12 text-center pt-lg-5 mt-lg-5">

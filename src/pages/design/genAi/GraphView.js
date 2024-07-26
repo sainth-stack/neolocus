@@ -206,8 +206,8 @@ const GraphView = () => {
         {
             label: 'Step 4', id: 4, type: 'count', selected: "", list: [
                 { color: 'rgb(153, 204, 255)', text: 1 },
-                { color: 'rgb(102, 170, 229)', text: 2 },
-                { color: 'rgb(72, 136, 200)', text: 3 }
+                // { color: 'rgb(102, 170, 229)', text: 2 },
+                // { color: 'rgb(72, 136, 200)', text: 3 }
             ]
         },
     ];
@@ -328,8 +328,8 @@ const GraphView = () => {
                                 style={{ width: '100%' }}
                             />
                             <button className="btn btn-primary" onClick={() => { handleReset() }} style={{ display: 'flex', justifyContent: 'center', marginTop: '10px', width: 'fit-content' }}>Email Me</button>
+                            <button className="btn btn-primary" onClick={() => { handleReset() }} style={{ display: 'flex', justifyContent: 'center', marginTop: '10px', width: 'fit-content' }}>Download</button>
                         </div>
-
                     }
                 </div>}
             </Grid>

@@ -17,7 +17,7 @@ const Pricing = () => {
             btnText: 'Current Plan',
             desc: "No credit card required",
             list: [
-                { text: '10 Generations', status: true },
+                { text: '5 Generations', status: true },
                 { text: 'High resolution outputs', status: false },
                 { text: 'DISAI watermark free', status: false },
                 { text: 'Commercial License', status: false }

@@ -1,5 +1,3 @@
-import Logo from "../../assets/images/Logo2.png";
-import loginbg from "../../assets/svg/loginbg.svg";
 import eye from "../../assets/svg/eye-fill.svg";
 import eye2 from "../../assets/svg/eye-slash.svg";
 import { useState } from "react";
@@ -11,7 +9,7 @@ import axios from "axios";
 import { useGoogleLogin } from '@react-oauth/google';
 import { useUser } from "../context/userContext";
 import { baseURL } from "../const";
-
+import bedroom from '../../assets/images/neolocus/bedroom.png'
 export const Login = () => {
   const [loading, setLoading] = useState(false)
   const [toggle2, setToggle2] = useState(false)
@@ -131,8 +129,14 @@ export const Login = () => {
 
   return (
     <div className="container-fluid row m-0 p-0" style={{ background: 'rgb(255 252 245)' }}>
-      <div className="col-md-6 pt-4 pb-4" style={{ height: '90vh', display: 'flex', justifyContent: 'center', alignItems: 'center', background: 'rgb(72, 136, 200)' }}>
-        <h5 className="text-white font-weight-bold mt-2" style={{ fontSize: '5.8rem', width: '600px' }} >Design the room of your dreams</h5>
+      <div className="col-md-6 pt-4 pb-4" style={{
+        height: '90vh', display: 'flex', justifyContent: 'center', alignItems: 'center',
+        // background: 'rgb(72, 136, 200)',
+        backgroundImage: `url(${bedroom})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}>
+        <h5 className="text-white font-weight-bold mt-2" style={{ fontSize: '5.8rem', width: '600px' }} >Generate Room designs in Seconds</h5>
       </div>
       <div className="col-md-6 col-xs-12 col-sm-12 text-center pt-lg-5 mt-lg-5">
         <div className="pt-5">

@@ -7,7 +7,7 @@ import avatar from '../../assets/svg/avatar.svg';
 import './styles.css'
 import axios from "axios";
 import { useUser } from "../../pages/context/userContext";
-export const baseURL='https://otamat.com/api'
+export const baseURL = 'https://otamat.com/api'
 function NavbarV2() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -36,7 +36,6 @@ function NavbarV2() {
   };
 
   useEffect(() => {
-    const pathname = location.pathname;
     if (userName) {
       setIsLogin(true);
       // navigate('/start-design');
@@ -45,6 +44,16 @@ function NavbarV2() {
       // navigate('/login');
     }
   }, [userName]);
+
+
+  useEffect(() => {
+    const pathname = location.pathname;
+    if (pathname == "/start-design") {
+      setCurrentTab(0)
+    } else if (pathname === '/graph-view') {
+      setCurrentTab(1)
+    }
+  }, [location])
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -93,46 +102,46 @@ function NavbarV2() {
         <div className="collapse navbar-collapse" style={{ marginLeft: '20px', display: 'flex', gap: '20px' }} id="navbarNav">
           <img
             src={Logo}
-            style={{ width: '100px', height: '62px' }}
+            style={{ width: '200px', height: '62px' }}
             id="logo_RL"
             alt="logo"
           />
           {isLogin &&
-           <Tabs
-            value={currentTab}
-            onChange={handleTabChange}
-            sx={{
-              marginTop: '10px',
-              marginBottom: '10px',
-              '& .MuiTabs-flexContainer': {
-                display: 'flex',
-                flexDirection: 'row',
-              },
-              '& .MuiTab-root': {
-                textTransform: 'none',
-                fontSize: '16px',
-                fontWeight: '400',
-                lineHeight: '24px',
-                fontFamily: 'Poppins',
-                color: '#242424',
-                margin: '4px',
-                padding: '4px 10px',
-                ':hover': {
-                  background: '#E6EDF5'
-                }
-              },
-              '& .Mui-selected': {
-                fontWeight: 700,
-              },
-              svg: {
-                width: 16,
-                height: 16,
-              },
-            }}
-          >
-            <Tab label="Text View" />
-            <Tab label="Graphical View" />
-          </Tabs>}
+            <Tabs
+              value={currentTab}
+              onChange={handleTabChange}
+              sx={{
+                marginTop: '10px',
+                marginBottom: '10px',
+                '& .MuiTabs-flexContainer': {
+                  display: 'flex',
+                  flexDirection: 'row',
+                },
+                '& .MuiTab-root': {
+                  textTransform: 'none',
+                  fontSize: '16px',
+                  fontWeight: '400',
+                  lineHeight: '24px',
+                  fontFamily: 'Poppins',
+                  color: '#242424',
+                  margin: '4px',
+                  padding: '4px 10px',
+                  ':hover': {
+                    background: '#E6EDF5'
+                  }
+                },
+                '& .Mui-selected': {
+                  fontWeight: 700,
+                },
+                svg: {
+                  width: 16,
+                  height: 16,
+                },
+              }}
+            >
+              <Tab label="Text View" />
+              <Tab label="Graphical View" />
+            </Tabs>}
         </div>
         <div style={{ display: 'flex', gap: '20px', justifyContent: 'center', alignItems: 'center', paddingRight: '10px' }}>
           <div style={{ display: 'flex', gap: '20px', justifyContent: 'center', alignItems: 'center', marginTop: '10px' }}>
@@ -143,7 +152,7 @@ function NavbarV2() {
             <div className="dropdown" ref={dropdownRef}>
               <button className="dropdown-toggle" onClick={toggleDropdown}>
                 <img src={avatar} style={{ width: "32px", marginRight: '5px' }} alt="avatar" />
-                <span>{userData?.length>0 ? userData[0]?.replace('_', " ") :"Admin"}</span>
+                <span>{userData?.length > 0 ? userData[0]?.replace('_', " ") : "Admin"}</span>
               </button>
               {isDropdownOpen && (
                 <div className="dropdown33" style={{ minWidth: '280px' }}>
