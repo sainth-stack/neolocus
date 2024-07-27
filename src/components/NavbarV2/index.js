@@ -61,11 +61,13 @@ function NavbarV2() {
 
   const getUserInfo = async () => {
     try {
-      const formData = new FormData();
-      formData.append('user', userName);
-      const response = await axios.post(`${baseURL}/get_user_details`, formData);
-      console.log(response);
-      setUserData(response?.data?.paymentinfo);
+      if (userName) {
+        const formData = new FormData();
+        formData.append('user', userName);
+        const response = await axios.post(`${baseURL}/get_user_details`, formData);
+        console.log(response);
+        setUserData(response?.data?.paymentinfo);
+      }
     } catch (error) {
       console.error('Error fetching user info:', error);
     }

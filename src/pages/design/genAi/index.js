@@ -1,11 +1,7 @@
 // MiddleContent.js
 
-import { CircularProgress, Grid } from "@mui/material"
-import TextField from '@mui/material/TextField';
-import InputAdornment from '@mui/material/InputAdornment';
-import { IoMdSend } from "react-icons/io";
+
 import { useEffect, useState } from "react";
-import leftImage from '../../../assets/images/neolocus/room.png'
 import living from '../../../assets/images/neolocus/living.png'
 import bedroom from '../../../assets/images/neolocus/bedroom.png'
 import modern from '../../../assets/images/neolocus/modern.png'
@@ -109,6 +105,30 @@ const GenAi = () => {
         }
     };
 
+    const sendEmailToUser = async (url) => {
+
+        var formData = new FormData();
+
+        Object.entries(data).forEach(([key, value]) => formData.append(key, value))
+        formData.append("image_url", url)
+        try {
+            const response = await axios.post(
+                `${baseURL}/sendEmail`,
+                formData,
+                {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                        // token:localStorage.getItem('token')
+                    }
+                }
+            );
+        } catch (err) {
+            setLoading(false)
+            console.log(err)
+        }
+
+    }
+
     const handleUpload = async () => {
         var formData = new FormData();
 
@@ -128,6 +148,7 @@ const GenAi = () => {
                 }
             );
             // setLoading(false)
+            sendEmailToUser(response?.data?.image)
             getUserInfo()
             setImage(response?.data?.image)
         } catch (err) {
@@ -247,16 +268,11 @@ const GenAi = () => {
         }
     };
 
-    const prevStep = () => {
-        if (activeStep > 0) {
-            setActiveStep(activeStep - 1);
-        }
-    };
 
-    const [loaded, setLoaded] = useState(false);
-    const handleImageLoad = () => {
-        setLoaded(true);
-    };
+    const handleUpload2 = (img) => {
+        console.log(img)
+        window.open(img, '_blank');
+      };
 
     return (
         <Grid display={"flex"}>
@@ -345,9 +361,12 @@ const GenAi = () => {
                             </div>
                         </div>
                         <div style={{
-                            
+
                         }}>
-                            <button type="submit" title={(userData?.length > 2 && userData[2] > 0) ? "" :"Upgrade to premium to get more credits "} id="uploadButton" class="btn btn-primary" disabled={(userData?.length > 2 && userData[2] > 0) ? false : true} onClick={() => handleUpload()} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '10px'}} >Submit</button>
+                            <button type="submit" title={(userData?.length > 2 && userData[2] > 0) ? "" : "Upgrade to premium to get more credits "} id="uploadButton" class="btn btn-primary" disabled={(userData?.length > 2 && userData[2] > 0) ? false : true} onClick={() => handleUpload()} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '10px' }} >Generate</button>
+                            {(img !== null && imgsLoaded) &&
+                                    <button type="submit" id="uploadButton" class="btn btn-primary" onClick={() => handleUpload2(img)} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '10px' }} >Download</button>
+                            }
                         </div>
                     </div>
                 </div>

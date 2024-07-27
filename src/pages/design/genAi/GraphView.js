@@ -81,6 +81,36 @@ const GraphView = () => {
         }
     }, [img]);
 
+    const sendEmailToUser = async (url) => {
+
+        var formData = new FormData();
+
+        Object.entries(data).forEach(([key, value]) => formData.append(key, value))
+        formData.append("image_url", url)
+        try {
+            const response = await axios.post(
+                `${baseURL}/sendEmail`,
+                formData,
+                {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                        // token:localStorage.getItem('token')
+                    }
+                }
+            );
+        } catch (err) {
+            setLoading(false)
+            console.log(err)
+        }
+
+    }
+
+    const handleUpload2 = (img) => {
+        console.log(img)
+        window.open(img, '_blank');
+    };
+
+
     const handleUpload = async () => {
         var formData = new FormData();
         setDesign(true)
@@ -108,6 +138,7 @@ const GraphView = () => {
             setImage(response?.data?.image)
         } catch (err) {
             setLoading(false)
+            setImgsLoaded(true)
             console.log(err)
         }
     }
@@ -136,34 +167,6 @@ const GraphView = () => {
             console.log(err)
         }
     }
-
-    const data1 = [
-        { label: 'Select', value: '' },
-        { label: 'Living Room', value: 'Livingroom' },
-        { label: 'Bed Room', value: 'Bedroom' },
-    ]
-
-    const data2 = [
-        { label: 'Select', value: '' },
-        { label: 'Red', value: 'Red' },
-        { label: 'Brown', value: 'Brown' },
-        { label: 'Green', value: 'Green' }
-    ]
-
-    const data3 = [
-        { label: 'Select', value: '' },
-        { label: '1', value: '1' },
-        { label: '2', value: '2' },
-        { label: '3', value: '3' }
-    ]
-
-    const styleData = [
-        { label: 'Select', value: '' },
-        { label: 'Modern', value: 'Modern' },
-        { label: 'Minimal', value: 'Minimal' },
-        { label: 'contemporary', value: 'contemporary' },
-        { label: 'traditional', value: 'traditional' }
-    ]
 
     const inData = {
         roomImage: "",
@@ -249,6 +252,18 @@ const GraphView = () => {
         setSelData(inData)
     }
 
+    const getDisabled = (step) => {
+        console.log(selData)
+        if (step == 1) {
+            return selData.style ? false : true
+        } else if (step == 2) {
+            return selData.color ? false : true
+        } else if (step == 3) {
+            return selData.count ? false : true
+        } else return false
+
+    }
+
     return (
         <Grid>
             {!design && <Grid md={5} sx={{ display: 'flex', gap: '40px', padding: '40px 40px' }}>
@@ -301,8 +316,8 @@ const GraphView = () => {
                         <button className="back-button-text" onClick={() => prevStep()}>
                             BACK
                         </button>
-                        <button className="next-button-text" onClick={() => activeStep < 3 ? nextStep() : handleUpload()}>
-                            {activeStep > 2 ? "Get Design" : "NEXT"}
+                        <button className="next-button-text" disabled={getDisabled(activeStep)} style={{ opacity: getDisabled(activeStep) ? 0.5 : 1 }} onClick={() => activeStep < 3 ? nextStep() : handleUpload()}>
+                            {activeStep > 2 ? "Generate" : "NEXT"}
                         </button>
                     </div>
 
@@ -327,10 +342,15 @@ const GraphView = () => {
                                 alt="new"
                                 style={{ width: '100%' }}
                             />
-                            <button className="btn btn-primary" onClick={() => { handleReset() }} style={{ display: 'flex', justifyContent: 'center', marginTop: '10px', width: 'fit-content' }}>Email Me</button>
-                            <button className="btn btn-primary" onClick={() => { handleReset() }} style={{ display: 'flex', justifyContent: 'center', marginTop: '10px', width: 'fit-content' }}>Download</button>
+                            <button className="btn btn-primary" onClick={() => { sendEmailToUser() }} style={{ display: 'flex', justifyContent: 'center', marginTop: '10px', width: 'fit-content' }}>Email Me</button>
+                            <button className="btn btn-primary" onClick={() => { handleUpload2() }} style={{ display: 'flex', justifyContent: 'center', marginTop: '10px', width: 'fit-content' }}>Download</button>
+                            <button className="btn btn-primary" onClick={() => { handleReset() }} style={{ display: 'flex', justifyContent: 'center', marginTop: '10px', width: 'fit-content' }}>Generate New Design</button>
                         </div>
                     }
+                    {((img == null) && imgsLoaded) && <div style={{display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center'}}>
+                        Please Try Again in some time
+                        <button className="btn btn-primary" onClick={() => { handleReset() }} style={{ display: 'flex', justifyContent: 'center', marginTop: '10px', width: 'fit-content' }}>Try Again</button>
+                    </div>}
                 </div>}
             </Grid>
         </Grid>

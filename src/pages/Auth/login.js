@@ -22,11 +22,13 @@ export const Login = () => {
 
   const getUserData = async (userName) => {
     try {
-      var formData = new FormData();
-      formData.append('user', userName);
-      const response = await axios.post(`${baseURL}/get_user_details`, formData);
-      console.log(response)
-      setUserData(response?.data?.paymentinfo)
+      if (userName) {
+        var formData = new FormData();
+        formData.append('user', userName);
+        const response = await axios.post(`${baseURL}/get_user_details`, formData);
+        console.log(response)
+        setUserData(response?.data?.paymentinfo)
+      }
     } catch (error) {
       console.error('Error fetching user info:', error);
     }
@@ -50,7 +52,7 @@ export const Login = () => {
 
         setLoading(false)
         console.log(response)
-        if (response.data === "Success") {
+        if (response.data?.status === "Success") {
           navigate('/start-design')
           localStorage.setItem('username', email);
           localStorage.setItem('email', email);

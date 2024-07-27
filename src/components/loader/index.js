@@ -33,17 +33,20 @@ function LinearProgressWithLabel(props) {
 }
 
 export default function LinearWithValueLabel({ loading }) {
-  const [progress, setProgress] = React.useState(10);
+  const [progress, setProgress] = React.useState(0);
 
   React.useEffect(() => {
-    const timer = setInterval(() => {
-      setProgress((prevProgress) =>
-        loading ? (prevProgress >= 100 ? 10 : prevProgress + 10) : 0,
-      );
-    }, 6000);
-    return () => {
-      clearInterval(timer);
-    };
+    if (loading) {
+      const timer = setInterval(() => {
+        setProgress((prevProgress) =>
+          prevProgress >= 100 ? 10 : prevProgress + 10
+        );
+      }, 6000);
+      return () => clearInterval(timer);
+    } else {
+      // Reset progress to 0 when not loading
+      setProgress(0);
+    }
   }, [loading]);
 
   return (

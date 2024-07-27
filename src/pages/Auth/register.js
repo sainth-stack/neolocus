@@ -30,10 +30,10 @@ export const Register = () => {
       .post(`${baseURL}/register`, formData)
       .then((response) => {
         setLoading(false)
-        if (response.data == "Success") {
+        if (response?.data?.status == "Success") {
           navigate('/login')
         } else {
-          setError(response.data)
+          setError(response?.data)
         }
       })
       .catch((err) => {
