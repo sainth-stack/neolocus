@@ -32,7 +32,7 @@ function LinearProgressWithLabel(props) {
   );
 }
 
-export default function LinearWithValueLabel({ loading }) {
+export default function LinearWithValueLabel({ loading, setImgsLoaded }) {
   const [progress, setProgress] = React.useState(0);
 
   React.useEffect(() => {
@@ -41,6 +41,9 @@ export default function LinearWithValueLabel({ loading }) {
         setProgress((prevProgress) =>
           prevProgress >= 100 ? 10 : prevProgress + 10
         );
+        if (progress >= 100) {
+          setImgsLoaded(true)
+        }
       }, 6000);
       return () => clearInterval(timer);
     } else {

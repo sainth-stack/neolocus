@@ -381,7 +381,7 @@ const GenAi = () => {
                 justifyContent: 'center',
                 alignItems: 'center'
             }}>
-                {(loading && !imgsLoaded) ? <LinearWithValueLabel loading={loading || !imgsLoaded} /> : <div>
+                {(loading && !imgsLoaded) ? <LinearWithValueLabel loading={loading || !imgsLoaded} setImgsLoaded={setImgsLoaded} /> : <div>
                     {/* <h2>Deisgn</h2> */}
                     {(img !== null && imgsLoaded) &&
                         <img

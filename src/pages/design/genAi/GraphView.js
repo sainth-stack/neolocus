@@ -134,8 +134,13 @@ const GraphView = () => {
                     }
                 }
             );
+            if (response?.data?.image === "NA") {
+                setImgsLoaded(true)
+            } else {
+                setImage(response?.data?.image)
+            }
             setLoading(false)
-            setImage(response?.data?.image)
+
         } catch (err) {
             setLoading(false)
             setImgsLoaded(true)
@@ -347,7 +352,7 @@ const GraphView = () => {
                             <button className="btn btn-primary" onClick={() => { handleReset() }} style={{ display: 'flex', justifyContent: 'center', marginTop: '10px', width: 'fit-content' }}>Generate New Design</button>
                         </div>
                     }
-                    {((img == null) && imgsLoaded) && <div style={{display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center'}}>
+                    {((img == null) && imgsLoaded) && <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
                         Please Try Again in some time
                         <button className="btn btn-primary" onClick={() => { handleReset() }} style={{ display: 'flex', justifyContent: 'center', marginTop: '10px', width: 'fit-content' }}>Try Again</button>
                     </div>}
