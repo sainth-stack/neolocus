@@ -241,7 +241,7 @@ export const Login = () => {
                 type={loading ? "button" : "submit"}
                 disabled={loading}
               >
-                {loading ? "Logging in..." : 'Login'} {loading ? <LoadingIndicator size={"1"} /> : null}
+                {loading ? "Logging in..." : 'Sigin'} {loading ? <LoadingIndicator size={"1"} /> : null}
               </button>
             </form>
             <div className="account2 mt-2">{"Don't Have An Account?"}</div>
