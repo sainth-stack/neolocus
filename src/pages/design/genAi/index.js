@@ -22,6 +22,7 @@ import ImageLoader from "./imageContainer";
 import LinearWithValueLabel from "../../../components/loader/index";
 import { baseURL } from "../../../components/NavbarV2";
 import { useUser } from "../../context/userContext";
+import { Grid } from "@mui/material";
 // import gemini_icon from '../../assets/svg/gemini_icon.png'
 const GenAi = () => {
 
