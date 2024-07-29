@@ -66,6 +66,9 @@ function NavbarV2() {
         formData.append('user', userName);
         const response = await axios.post(`${baseURL}/get_user_details`, formData);
         console.log(response);
+        if (response?.data?.paymentinfo.length > 2) {
+          localStorage.setItem("email", response?.data?.paymentinfo[3])
+        }
         setUserData(response?.data?.paymentinfo);
       }
     } catch (error) {

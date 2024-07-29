@@ -51,6 +51,18 @@ const GraphView = () => {
         number_of_room_designs: '',
         additional_instructions: ""
     })
+
+    const inData = {
+        roomImage: "",
+        room: 'living room',
+        style: "",
+        color: '',
+        count: ''
+    }
+
+    const [selData, setSelData] = useState(inData)
+
+
     const handleChange = ({ target: { name, value } }) => {
         let updatedData = { ...data };
         updatedData[name] = value;
@@ -82,11 +94,19 @@ const GraphView = () => {
     }, [img]);
 
     const sendEmailToUser = async (url) => {
-
         var formData = new FormData();
-
-        Object.entries(data).forEach(([key, value]) => formData.append(key, value))
+        const updatedData = {
+            selected_style: selData.style,
+            selected_room_color: selData.color,
+            selected_room_type: selData?.room,
+            number_of_room_designs: selData?.count,
+            additional_instructions: data?.additional_instructions
+        };
+        Object.entries(updatedData).forEach(([key, value]) => formData.append(key, value))
         formData.append("image_url", url)
+        formData.append("email", localStorage.getItem('email'))
+        formData.append("username", localStorage.getItem('username'))
+
         try {
             const response = await axios.post(
                 `${baseURL}/sendEmail`,
@@ -172,16 +192,6 @@ const GraphView = () => {
             console.log(err)
         }
     }
-
-    const inData = {
-        roomImage: "",
-        room: 'living room',
-        style: "",
-        color: '',
-        count: ''
-    }
-
-    const [selData, setSelData] = useState(inData)
 
 
     const steps = [
@@ -347,9 +357,11 @@ const GraphView = () => {
                                 alt="new"
                                 style={{ width: '100%' }}
                             />
-                            <button className="btn btn-primary" onClick={() => { sendEmailToUser() }} style={{ display: 'flex', justifyContent: 'center', marginTop: '10px', width: 'fit-content' }}>Email Me</button>
-                            <button className="btn btn-primary" onClick={() => { handleUpload2() }} style={{ display: 'flex', justifyContent: 'center', marginTop: '10px', width: 'fit-content' }}>Download</button>
-                            <button className="btn btn-primary" onClick={() => { handleReset() }} style={{ display: 'flex', justifyContent: 'center', marginTop: '10px', width: 'fit-content' }}>Generate New Design</button>
+                            <div style={{display:'flex',gap:'5px'}}>
+                                <button className="btn btn-primary" onClick={() => { sendEmailToUser(img) }} style={{ display: 'flex', justifyContent: 'center', marginTop: '10px', width: 'fit-content' }}>Email Me</button>
+                                <button className="btn btn-primary" onClick={() => { handleUpload2(img) }} style={{ display: 'flex', justifyContent: 'center', marginTop: '10px', width: 'fit-content' }}>Download</button>
+                                <button className="btn btn-primary" onClick={() => { handleReset() }} style={{ display: 'flex', justifyContent: 'center', marginTop: '10px', width: 'fit-content' }}>Generate New Design</button>
+                            </div>
                         </div>
                     }
                     {((img == null) && imgsLoaded) && <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>

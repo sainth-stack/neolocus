@@ -58,7 +58,6 @@ const GenAi = () => {
         number_of_room_designs: 1,
         additional_instructions: "",
         user_name: localStorage.getItem('username'),
-        email: ""
     })
 
 
@@ -112,6 +111,7 @@ const GenAi = () => {
 
         Object.entries(data).forEach(([key, value]) => formData.append(key, value))
         formData.append("image_url", url)
+        formData.append("email", localStorage.getItem("email"))
         try {
             const response = await axios.post(
                 `${baseURL}/sendEmail`,
@@ -149,7 +149,7 @@ const GenAi = () => {
                 }
             );
             // setLoading(false)
-            sendEmailToUser(response?.data?.image)
+            // sendEmailToUser(response?.data?.image)
             getUserInfo()
             setImage(response?.data?.image)
         } catch (err) {
@@ -273,7 +273,7 @@ const GenAi = () => {
     const handleUpload2 = (img) => {
         console.log(img)
         window.open(img, '_blank');
-      };
+    };
 
     return (
         <Grid display={"flex"}>
@@ -342,31 +342,17 @@ const GenAi = () => {
                                 </select>
                             </div>
                         </div>
-                        <div style={{ marginTop: '10px' }}>
-                            <div>
-                                <lable>Email</lable>
-                                {/* <select id="connection-name" onChange={handleChange} name='number_of_room_designs' value={data.number_of_room_designs} >
-                                    {data3.map(option => (
-                                        <option key={option.label} style={{
-                                            padding: '8px',
-                                            fontSize: '16px',
-                                            fontFamily: 'Arial, sans-serif',
-                                            backgroundColor: '#fff',
-                                            color: '#333'
-                                        }} value={option.value}>
-                                            {option.label}
-                                        </option>
-                                    ))}
-                                </select> */}
-                                <input style={{ padding: '6px 8px' }} name="email" onChange={handleChange} value={data.email} />
-                            </div>
-                        </div>
-                        <div style={{
 
+                        <div style={{
+                            display: 'flex', gap: '4px'
                         }}>
                             <button type="submit" title={(userData?.length > 2 && userData[2] > 0) ? "" : "Upgrade to premium to get more credits "} id="uploadButton" class="btn btn-primary" disabled={(userData?.length > 2 && userData[2] > 0) ? false : true} onClick={() => handleUpload()} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '10px' }} >Generate</button>
                             {(img !== null && imgsLoaded) &&
-                                    <button type="submit" id="uploadButton" class="btn btn-primary" onClick={() => handleUpload2(img)} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '10px' }} >Download</button>
+                                <button id="uploadButton" class="btn btn-primary" onClick={() => sendEmailToUser(img)} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '10px' }} >Send Email</button>
+                            }
+                            {(img !== null && imgsLoaded) &&
+
+                                <button id="uploadButton" class="btn btn-primary" onClick={() => handleUpload2(img)} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '10px' }} >Download</button>
                             }
                         </div>
                     </div>
