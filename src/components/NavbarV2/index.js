@@ -2,12 +2,12 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Tab, Tabs } from "@mui/material";
-import Logo from '../../assets/images/logo.jpg';
-import avatar from '../../assets/svg/avatar.svg';
-import './styles.css'
+import Logo from "../../assets/images/logo.jpg";
+import avatar from "../../assets/svg/avatar.svg";
+import "./styles.css";
 import axios from "axios";
 import { useUser } from "../../pages/context/userContext";
-export const baseURL = 'https://otamat.com/api'
+export const baseURL = "https://otamat.com/api";
 function NavbarV2() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -17,21 +17,21 @@ function NavbarV2() {
     localStorage.removeItem("username");
     localStorage.removeItem("email");
     setIsDropdownOpen(false);
-    navigate('/login');
+    navigate("/login");
   };
 
   const [currentTab, setCurrentTab] = useState(0);
   const [isLogin, setIsLogin] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const userName = localStorage.getItem('username');
+  const userName = localStorage.getItem("username");
   const { userData, setUserData } = useUser();
 
   const handleTabChange = (event, newValue) => {
     setCurrentTab(newValue);
     if (newValue === 0) {
-      navigate('/start-design');
+      navigate("/start-design");
     } else {
-      navigate('/graph-view');
+      navigate("/graph-view");
     }
   };
 
@@ -45,15 +45,14 @@ function NavbarV2() {
     }
   }, [userName]);
 
-
   useEffect(() => {
     const pathname = location.pathname;
     if (pathname == "/start-design") {
-      setCurrentTab(0)
-    } else if (pathname === '/graph-view') {
-      setCurrentTab(1)
+      setCurrentTab(0);
+    } else if (pathname === "/graph-view") {
+      setCurrentTab(1);
     }
-  }, [location])
+  }, [location]);
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
@@ -63,16 +62,19 @@ function NavbarV2() {
     try {
       if (userName) {
         const formData = new FormData();
-        formData.append('user', userName);
-        const response = await axios.post(`${baseURL}/get_user_details`, formData);
+        formData.append("user", userName);
+        const response = await axios.post(
+          `${baseURL}/get_user_details`,
+          formData
+        );
         console.log(response);
         if (response?.data?.paymentinfo.length > 2) {
-          localStorage.setItem("email", response?.data?.paymentinfo[3])
+          localStorage.setItem("email", response?.data?.paymentinfo[3]);
         }
         setUserData(response?.data?.paymentinfo);
       }
     } catch (error) {
-      console.error('Error fetching user info:', error);
+      console.error("Error fetching user info:", error);
     }
   };
 
@@ -96,46 +98,53 @@ function NavbarV2() {
 
   return (
     <>
-      <nav className="navbar navbar-expand-lg navbar-light sticky-top" style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        borderBottom: '1px solid lightgrey',
-        background: 'rgb(255 252 245)'
-      }}>
-        <div className="collapse navbar-collapse" style={{ marginLeft: '20px', display: 'flex', gap: '20px' }} id="navbarNav">
+      <nav
+        className="navbar navbar-expand-lg navbar-light sticky-top"
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          right: 0,
+          borderBottom: "1px solid lightgrey",
+          background: "rgb(255 252 245)",
+        }}
+      >
+        <div
+          className="collapse navbar-collapse"
+          style={{ marginLeft: "20px", display: "flex", gap: "20px" }}
+          id="navbarNav"
+        >
           <img
             src={Logo}
-            style={{ width: '200px', height: '62px' }}
+            style={{ width: "200px", height: "62px" }}
             id="logo_RL"
             alt="logo"
           />
-          {isLogin &&
+          {isLogin && (
             <Tabs
               value={currentTab}
               onChange={handleTabChange}
               sx={{
-                marginTop: '10px',
-                marginBottom: '10px',
-                '& .MuiTabs-flexContainer': {
-                  display: 'flex',
-                  flexDirection: 'row',
+                marginTop: "10px",
+                marginBottom: "10px",
+                "& .MuiTabs-flexContainer": {
+                  display: "flex",
+                  flexDirection: "row",
                 },
-                '& .MuiTab-root': {
-                  textTransform: 'none',
-                  fontSize: '16px',
-                  fontWeight: '400',
-                  lineHeight: '24px',
-                  fontFamily: 'Poppins',
-                  color: '#242424',
-                  margin: '4px',
-                  padding: '4px 10px',
-                  ':hover': {
-                    background: '#E6EDF5'
-                  }
+                "& .MuiTab-root": {
+                  textTransform: "none",
+                  fontSize: "16px",
+                  fontWeight: "400",
+                  lineHeight: "24px",
+                  fontFamily: "Poppins",
+                  color: "#242424",
+                  margin: "4px",
+                  padding: "4px 10px",
+                  ":hover": {
+                    background: "#E6EDF5",
+                  },
                 },
-                '& .Mui-selected': {
+                "& .Mui-selected": {
                   fontWeight: 700,
                 },
                 svg: {
@@ -146,40 +155,119 @@ function NavbarV2() {
             >
               <Tab label="Text View" />
               <Tab label="Graphical View" />
-            </Tabs>}
+            </Tabs>
+          )}
         </div>
-        <div style={{ display: 'flex', gap: '20px', justifyContent: 'center', alignItems: 'center', paddingRight: '10px' }}>
-          <div style={{ display: 'flex', gap: '20px', justifyContent: 'center', alignItems: 'center', marginTop: '10px' }}>
-            {isLogin && <p style={{ cursor: 'pointer', '&:hover': { color: 'blue' } }} onClick={() => { navigate('/start-design') }}>Start Designing</p>}
-            <p style={{ cursor: 'pointer', '&:hover': { color: 'blue' } }} onClick={() => { navigate('/pricing') }}>Pricing</p>
+        <div
+          style={{
+            display: "flex",
+            gap: "20px",
+            justifyContent: "center",
+            alignItems: "center",
+            paddingRight: "10px",
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              gap: "20px",
+              justifyContent: "center",
+              alignItems: "center",
+              marginTop: "10px",
+            }}
+          >
+            {isLogin && (
+              <p
+                style={{ cursor: "pointer", "&:hover": { color: "blue" } }}
+                onClick={() => {
+                  navigate("/start-design");
+                }}
+              >
+                Start Designing
+              </p>
+            )}
+            <p
+              style={{ cursor: "pointer", "&:hover": { color: "blue" } }}
+              onClick={() => {
+                navigate("/pricing");
+              }}
+            >
+              Pricing
+            </p>
           </div>
           {isLogin && (
             <div className="dropdown" ref={dropdownRef}>
               <button className="dropdown-toggle" onClick={toggleDropdown}>
-                <img src={avatar} style={{ width: "32px", marginRight: '5px' }} alt="avatar" />
-                <span>{userData?.length > 0 ? userData[0]?.replace('_', " ") : "Admin"}</span>
+                <img
+                  src={avatar}
+                  style={{ width: "32px", marginRight: "5px" }}
+                  alt="avatar"
+                />
+                <span>
+                  {userData?.length > 0
+                    ? userData[0]?.replace("_", " ")
+                    : "Admin"}
+                </span>
               </button>
               {isDropdownOpen && (
-                <div className="dropdown33" style={{ minWidth: '280px' }}>
-                  <div className="" style={{ cursor: 'default', padding: '5px', paddingLeft: '10px', fontWeight: 600 }}>{userData[0]?.replace('_', " ")}</div>
-                  <div className="" style={{ cursor: 'default', padding: '5px', paddingLeft: '10px' }}>{userData[3] || "admin@gmail.com"}</div>
-                  <div className="dropdown-item" style={{ fontWeight: 600 }} onClick={() => navigate('/billing')}>Account & Billing</div>
-                  <div className="" style={{ cursor: 'default', padding: '5px', paddingLeft: '10px', fontWeight: 600 }}>{userData[2]} credits</div>
+                <div className="dropdown33" style={{ minWidth: "280px" }}>
+                  <div
+                    className=""
+                    style={{
+                      cursor: "default",
+                      padding: "5px",
+                      paddingLeft: "10px",
+                      fontWeight: 600,
+                    }}
+                  >
+                    {userData[0]?.replace("_", " ")}
+                  </div>
+                  <div
+                    className=""
+                    style={{
+                      cursor: "default",
+                      padding: "5px",
+                      paddingLeft: "10px",
+                    }}
+                  >
+                    {userData[3] || "admin@gmail.com"}
+                  </div>
+                  <div
+                    className="dropdown-item"
+                    style={{ fontWeight: 600 }}
+                    onClick={() => navigate("/billing")}
+                  >
+                    Account & Billing
+                  </div>
+                  <div
+                    className=""
+                    style={{
+                      cursor: "default",
+                      padding: "5px",
+                      paddingLeft: "10px",
+                      fontWeight: 600,
+                    }}
+                  >
+                    {userData[2]} credits
+                  </div>
                   <hr />
-                  <div className="dropdown-item" onClick={handleLogout}>Logout</div>
+                  <div className="dropdown-item" onClick={handleLogout}>
+                    Logout
+                  </div>
                 </div>
               )}
             </div>
           )}
           {!isLogin && (
             <button
+              className="btn"
               style={{
-                padding: '8px 10px',
-                background: 'rgb(72, 136, 200)',
-                width: '100px',
-                borderRadius: '15px',
-                color: 'white',
-                border: "none"
+                padding: "8px 10px",
+                background: "rgb(72, 136, 200)",
+                width: "100px",
+                borderRadius: "15px",
+                color: "white",
+                border: "none",
               }}
               onClick={() => handleLogout()}
             >

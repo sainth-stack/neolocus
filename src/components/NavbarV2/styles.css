@@ -5,7 +5,7 @@
 .logoText {
   margin-top: 15px;
 }
-.talent{
+.talent {
   font-family: Arial, Helvetica, sans-serif;
   font-weight: 900;
 }
@@ -26,10 +26,9 @@
   width: 290px;
   text-overflow: ellipsis;
   overflow: hidden;
-  
 }
-.searchg{
-  position:fixed !important;
+.searchg {
+  position: fixed !important;
   top: 8%;
 }
 
@@ -53,49 +52,49 @@
 .user-dropdown {
   width: 200px !important;
 }
-.searchInput{
-  padding-left: 25px!important;
-  border:none!important;
-  padding:10px;
-  border-radius: 100px!important;
+.searchInput {
+  padding-left: 25px !important;
+  border: none !important;
+  padding: 10px;
+  border-radius: 100px !important;
 }
-.searchInput-icon{
-  position:relative;
-  top:7px;
-  left:15px;
+.searchInput-icon {
+  position: relative;
+  top: 7px;
+  left: 15px;
   z-index: 9;
-  background-color: transparent!important;
+  background-color: transparent !important;
 }
-.search-bar{
-  width:696px!important;
-  background-color: #F5F5F6;
+.search-bar {
+  width: 696px !important;
+  background-color: #f5f5f6;
   border-radius: 40px;
 }
-.profile-pic{
-  width:44px;
-  height:44px;
+.profile-pic {
+  width: 44px;
+  height: 44px;
   border-radius: 100px;
 }
-.settings-pic{
-  width:24px;
-  height:24px;
+.settings-pic {
+  width: 24px;
+  height: 24px;
 }
-.notifications-pic{
-  width:24px;
-  height:31px;
+.notifications-pic {
+  width: 24px;
+  height: 31px;
 }
-.text-dark{
+.text-dark {
   color: #000000;
 }
-.searchIcon{
-  width:24px;
-  height:24px;
+.searchIcon {
+  width: 24px;
+  height: 24px;
 }
-.fs14{
-  font-size: 14px!important;
+.fs14 {
+  font-size: 14px !important;
 }
-.bg-white-fixed{
-  z-index: 999!important;
+.bg-white-fixed {
+  z-index: 999 !important;
 }
 
 /* Add this to your styles.scss or a CSS module */
@@ -139,4 +138,7 @@
   margin: 10px 0;
   border: 0;
   border-top: 1px solid #e1e1e1;
+}
+
+@media (max-width: 845px) {
 }
