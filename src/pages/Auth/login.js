@@ -1,3 +1,4 @@
+
 import eye from "../../assets/svg/eye-fill.svg";
 import eye2 from "../../assets/svg/eye-slash.svg";
 import { useState } from "react";
@@ -247,12 +248,6 @@ export const Login = () => {
                     alt="Logo"
                   />
                 </div>
-                {/* {validator.current.message(
-                    "Password",
-                    password,
-                    "required|password"
-                  )} */}
-                {/* <span className="error-message">{message}</span> */}
               </div>
               <div
                 style={{

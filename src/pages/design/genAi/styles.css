@@ -1,0 +1,45 @@
+@media (max-width: 845px) {
+  .form {
+    margin-top: 4rem !important;
+
+    width: 100% !important;
+    box-shadow: 1px 1px 3px gray !important;
+    padding: 0.5rem;
+    margin-left: -0.3rem;
+  }
+
+  .slider {
+    rotate: 270deg;
+    transform: scaleY(0.65);
+  }
+  .slide {
+    text-align: center;
+  }
+
+  .container {
+    width: 100vw !important;
+  }
+
+  .main_image {
+    position: relative;
+    top: 8rem;
+    width: 55%;
+    box-shadow: 1px 1px 3px gray;
+  }
+  .items {
+    display: flex;
+    flex-direction: column;
+    margin-top: 3rem;
+    overflow: scroll;
+  }
+
+  .grid {
+    display: flex;
+    flex-direction: column;
+  }
+  .btns {
+    margin-left: -17rem;
+    padding: 0 2rem;
+    width: 100%;
+  }
+}

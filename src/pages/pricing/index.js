@@ -9,7 +9,7 @@ import {
 import { RxCross2 } from "react-icons/rx";
 import { TiTick } from "react-icons/ti";
 import PaymentCard from "./payent";
-import "../../components/styles/pricing.css";
+import "./pricing.css";
 
 // Load Stripe outside of a component to avoid recreating the Stripe object on every render.
 const stripePromise = loadStripe("your-publishable-key-here");
@@ -74,24 +74,20 @@ const Pricing = () => {
           marginTop: item.mostPopular ? "-20px" : "0",
         }}
       >
-        <div style={{ fontSize: "26px", fontWeight: 700 }}>{item.name}</div>
-        <div style={{ fontSize: "26px", fontWeight: 700 }}>{item.value}</div>
+        <div
+          style={{ fontSize: "26px", fontWeight: 700 }}
+          className="text-center"
+        >
+          {item.name}
+        </div>
+        <div
+          style={{ fontSize: "26px", fontWeight: 700 }}
+          className="text-center"
+        >
+          {item.value}
+        </div>
         {item.mostPopular && (
-          <div
-            style={{
-              background: "rgb(72, 136, 200)",
-              color: "white",
-              textAlign: "center",
-              borderRadius: "8px",
-              width: "110px",
-              fontSize: "16px",
-              position: "absolute",
-              marginTop: "-50px",
-              marginLeft: "54px",
-            }}
-          >
-            Most Popular
-          </div>
+          <span className="most text-light  ">Most Popular</span>
         )}
         <button
           onClick={() =>
@@ -112,7 +108,7 @@ const Pricing = () => {
         >
           {item.btnText}
         </button>
-        <div>{item.desc}</div>
+        <div className="text-center">{item.desc}</div>
         <hr />
         {item.list.map((item2, index) => (
           <div
@@ -141,11 +137,14 @@ const Pricing = () => {
           alignItems: "center",
           height: "100vh",
           flexDirection: "column",
-          gap: "30px",
+
           background: "rgb(255 252 245)",
         }}
       >
-        <p style={{ fontSize: "30px", marginTop: "20px" }} className="p">
+        <p
+          style={{ fontSize: "30px", marginTop: "5rem" }}
+          className="pricing-plan  "
+        >
           Pricing Plan
         </p>
         <div className="d-flex gap-3 flex-wrap">
