@@ -1,12 +1,18 @@
-import React, { useState } from 'react';
-import { loadStripe } from '@stripe/stripe-js';
-import { Elements, useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
-import { RxCross2 } from 'react-icons/rx';
-import { TiTick } from 'react-icons/ti';
-import PaymentCard from './payent';
+import React, { useState } from "react";
+import { loadStripe } from "@stripe/stripe-js";
+import {
+  Elements,
+  useStripe,
+  useElements,
+  CardElement,
+} from "@stripe/react-stripe-js";
+import { RxCross2 } from "react-icons/rx";
+import { TiTick } from "react-icons/ti";
+import PaymentCard from "./payent";
+import "./pricing.css";
 
 // Load Stripe outside of a component to avoid recreating the Stripe object on every render.
-const stripePromise = loadStripe('your-publishable-key-here');
+const stripePromise = loadStripe("your-publishable-key-here");
 
 const Pricing = () => {
     const [openPayment, setOpenPayment] = useState({})
@@ -51,52 +57,105 @@ const Pricing = () => {
         }
     ];
 
-    const handleCheckout = async (item) => {
-        setOpenPayment({
-            price: item.mostPopular ? 100 : 200,
-            plan: item.mostPopular ? 'basic' : 'popular',
-        })
-    };
+  const handleCheckout = async (item) => {
+    setOpenPayment({
+      price: item.mostPopular ? 100 : 200,
+      plan: item.mostPopular ? "basic" : "popular",
+    });
+  };
 
-    const PricingCard = ({ item }) => {
-
-        return (
-            <div style={{ padding: '40px', display: 'flex', flexDirection: 'column', gap: '10px', border: item.mostPopular && '2px solid rgb(72, 136, 200)', marginTop: item.mostPopular && "-20px" }} className="card">
-                <div style={{ fontSize: '26px', fontWeight: 700 }}>{item.name}</div>
-                <div style={{ fontSize: '26px', fontWeight: 700 }}>{item.value}</div>
-                {item.mostPopular && <div style={{ background: 'rgb(72, 136, 200)', color: 'white', textAlign: 'center', borderRadius: '8px', width: '110px', fontSize: '16px', position: 'absolute', marginTop: '-50px', marginLeft: '54px' }}>Most Popular</div>}
-                <button
-                    onClick={() => item.btnText !== 'Current Plan' && handleCheckout(item)}
-                    style={{ border: 'none', background: item.btnText === "Current Plan" ? 'rgb(72, 136, 200)' : 'rgb(241 241 241)', padding: '8px 10px', color: item.btnText === "Current Plan" ? 'white' : 'rgb(72, 136, 200)', fontSize: '20px', borderRadius: '40px' }}>
-                    {item.btnText}
-                </button>
-                <div>{item.desc}</div>
-                <hr />
-                {item.list.map((item2, index) => (
-                    <div key={index} style={{ display: 'flex', gap: '5px', alignItems: 'center' }}>
-                        {item2.status ? <TiTick color="rgb(72, 136, 200)" /> : <RxCross2 color="red" />}
-                        <div style={{ fontSize: '16px', fontWeight: 600 }}>{item2.text}</div>
-                    </div>
-                ))}
-            </div>
-        );
-    };
-
+  const PricingCard = ({ item }) => {
     return (
-        <Elements stripe={stripePromise}>
-            <div style={{ display: 'flex', alignItems: 'center', height: '100vh', flexDirection: 'column', gap: '30px', background: 'rgb(255 252 245)' }}>
-                <p style={{ fontSize: '30px', marginTop: '20px' }}>Pricing Plan</p>
-                <div style={{ display: 'flex', gap: '10px' }}>
-                    {items.map((item, index) => (
-                        <PricingCard key={index} item={item} />
-                    ))}
-                </div>
+      <div
+        className="card cards d-flex flex-column gap-3"
+        style={{
+          padding: "40px",
+          border: item.mostPopular ? "2px solid rgb(72, 136, 200)" : "none",
+          marginTop: item.mostPopular ? "-20px" : "0",
+        }}
+      >
+        <div
+          style={{ fontSize: "26px", fontWeight: 700 }}
+          className="text-center"
+        >
+          {item.name}
+        </div>
+        <div
+          style={{ fontSize: "26px", fontWeight: 700 }}
+          className="text-center"
+        >
+          {item.value}
+        </div>
+        {item.mostPopular && (
+          <span className="most text-light  ">Most Popular</span>
+        )}
+        <button
+          onClick={() =>
+            item.btnText !== "Current Plan" && handleCheckout(item)
+          }
+          style={{
+            border: "none",
+            background:
+              item.btnText === "Current Plan"
+                ? "rgb(72, 136, 200)"
+                : "rgb(241 241 241)",
+            padding: "8px 10px",
+            color:
+              item.btnText === "Current Plan" ? "white" : "rgb(72, 136, 200)",
+            fontSize: "20px",
+            borderRadius: "40px",
+          }}
+        >
+          {item.btnText}
+        </button>
+        <div className="text-center">{item.desc}</div>
+        <hr />
+        {item.list.map((item2, index) => (
+          <div
+            key={index}
+            style={{ display: "flex", gap: "5px", alignItems: "center" }}
+          >
+            {item2.status ? (
+              <TiTick color="rgb(72, 136, 200)" />
+            ) : (
+              <RxCross2 color="red" />
+            )}
+            <div style={{ fontSize: "16px", fontWeight: 600 }}>
+              {item2.text}
             </div>
-            <PaymentCard openPayment={openPayment} />
-        </Elements>
+          </div>
+        ))}
+      </div>
     );
+  };
+
+  return (
+    <Elements stripe={stripePromise}>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          height: "100vh",
+          flexDirection: "column",
+
+          background: "rgb(255 252 245)",
+        }}
+      >
+        <p
+          style={{ fontSize: "30px", marginTop: "5rem" }}
+          className="pricing-plan  "
+        >
+          Pricing Plan
+        </p>
+        <div className="d-flex gap-3 flex-wrap">
+          {items.map((item, index) => (
+            <PricingCard key={index} item={item} />
+          ))}
+        </div>
+      </div>
+      <PaymentCard openPayment={openPayment} />
+    </Elements>
+  );
 };
 
 export default Pricing;
-
-

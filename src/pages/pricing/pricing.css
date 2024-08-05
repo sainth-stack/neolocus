@@ -1,0 +1,38 @@
+/* Add to pricing.css */
+
+.cards {
+  box-shadow: 1px 2px 3px gray;
+}
+.most {
+  position: relative;
+  background: rgb(72, 136, 200);
+  border-radius: 8px;
+  padding: 1px;
+  text-align: center;
+  width: 100%;
+  top: -10rem;
+  box-shadow: 1px 2px 3px gray;
+}
+.pricing-plan {
+  margin-bottom: 2rem;
+}
+@media (max-width: 845px) {
+  .pricing-plan {
+    margin-top: 7.5rem !important;
+  }
+  .most {
+    text-align: center;
+  }
+  .cards {
+    scroll-behavior: smooth;
+    width: 100%;
+    margin: 1rem;
+    margin-bottom: 2rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .cards {
+    padding: 20px;
+  }
+}
