@@ -1,1 +1,1 @@
-export const baseURL='https://otamat.com/api'
+export const baseURL='https://maya.otamat.com/api'
