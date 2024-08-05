@@ -1,5 +1,6 @@
 import { Grid } from "@mui/material";
 import { useEffect, useState } from "react";
+/*  */
 import leftImage from "../../../assets/images/neolocus/living.png";
 import living from "../../../assets/images/neolocus/living.png";
 import bedroom from "../../../assets/images/neolocus/bedroom.png";
