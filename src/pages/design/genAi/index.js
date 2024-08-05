@@ -44,7 +44,7 @@ const GenAi = () => {
   const [file, setFile] = useState(null);
   const [startChart, setStartChart] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [img, setImage] = useState(null);
+  const [img, setImage] = useState(contemporary);
   const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
     setFile(selectedFile);
@@ -280,17 +280,28 @@ const GenAi = () => {
   };
 
   return (
-    <Grid display={"flex"} className="container">
+    <Grid
+      className="total_container"
+      style={{
+        width: "100%",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "start",
+      }}
+    >
       <Grid
         item
         md={5}
-        style={{
-          borderRight: "1px solid grey",
-          width: "450px",
+        xs={12}
+        className="form_container"
+        sx={{
+          borderRight: { md: "1px solid grey", xs: "none" },
+          width: { md: "450px", xs: "100%" },
+          marginBottom: { xs: "20px", md: "0" },
         }}
       >
         <div
-          style={{ padding: "12px", marginTop: "4rem" }}
+          style={{ padding: "12px", marginTop: "4rem", marginLeft: "-.4rem" }}
           className="container"
         >
           {/* <h1 style={{ fontSize: '20px', fontWeight: 500 }}>Upload File</h1> */}
@@ -298,10 +309,11 @@ const GenAi = () => {
             style={{
               width: "100%",
               display: "flex",
+              justifyContent: "center",
               flexDirection: "column",
               alignItems: "start",
             }}
-            className=" form"
+            className="form"
           >
             {/* <input type="file" onChange={(e) => handleFileChange(e)} /> */}
             <div style={{ marginTop: "10px" }}>
@@ -413,7 +425,7 @@ const GenAi = () => {
                     : "Upgrade to premium to get more credits "
                 }
                 id="uploadButton"
-                class="btn btn-primary"
+                className="btn btn-primary "
                 disabled={
                   userData?.length > 2 && userData[2] > 0 ? false : true
                 }
@@ -430,7 +442,7 @@ const GenAi = () => {
               {img !== null && imgsLoaded && (
                 <button
                   id="uploadButton"
-                  class="btn btn-primary"
+                  className="btn btn-primary"
                   onClick={() => sendEmailToUser(img)}
                   style={{
                     display: "flex",
@@ -445,7 +457,7 @@ const GenAi = () => {
               {img !== null && imgsLoaded && (
                 <button
                   id="uploadButton"
-                  class="btn btn-primary"
+                  className="btn btn-primary"
                   onClick={() => handleUpload2(img)}
                   style={{
                     display: "flex",
@@ -462,17 +474,14 @@ const GenAi = () => {
         </div>
       </Grid>
       <Grid
-        item
-        md={7}
+        className="image_grid"
         padding={"10px"}
         sx={{
           width: "100%",
           height: "88vh",
           overflow: "auto",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
+
+          marginTop: "0",
         }}
       >
         {loading && !imgsLoaded ? (
@@ -481,8 +490,7 @@ const GenAi = () => {
             setImgsLoaded={setImgsLoaded}
           />
         ) : (
-          <div>
-            {/* <h2>Deisgn</h2> */}
+          <div className="image_container">
             {img !== null && imgsLoaded && (
               <img src={img} alt="new" style={{ width: "100%" }} />
             )}
