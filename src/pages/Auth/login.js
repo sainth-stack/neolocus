@@ -275,7 +275,7 @@ export const Login = () => {
                 type={loading ? "button" : "submit"}
                 disabled={loading}
               >
-                {loading ? "Logging in..." : "Sigin"}{" "}
+                {loading ? "Logging in..." : "Login"}{" "}
                 {loading ? <LoadingIndicator size={"1"} /> : null}
               </button>
             </form>
