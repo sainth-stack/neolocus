@@ -105,12 +105,39 @@ function NavbarV2() {
         background: 'rgb(255 252 245)'
       }}>
         <div className="collapse navbar-collapse" style={{ marginLeft: '20px', display: 'flex', gap: '20px' }} id="navbarNav">
-          <img
-            src={Logo}
-            style={{ width: '200px', height: '62px' }}
-            id="logo_RL"
-            alt="logo"
-          />
+        <div
+  style={{
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: '15px', // Slightly increase the gap for better spacing
+    padding: '10px', // Add some padding around the container
+  }}
+>
+  <img
+    src={Logo}
+    style={{ 
+      width: '60px', 
+      height: '62px', 
+      borderRadius: '50%', 
+      objectFit: 'cover', // Ensure the image covers the container well
+    }}
+    alt="logo"
+  />
+  <h1
+    style={{
+      fontSize: '2rem', // Adjust the size as needed
+      fontWeight: 'bold',
+      margin: '0', // Remove default margin
+      color: '#333', // Use a professional color for the text
+      fontFamily: 'Arial, sans-serif', // Use a professional font
+    }}
+  >
+    Maya
+  </h1>
+</div>
+
+
           {isLogin &&
             <Tabs
               value={currentTab}
@@ -161,11 +188,15 @@ function NavbarV2() {
               </button>
               {isDropdownOpen && (
                 <div className="dropdown33" style={{ minWidth: '280px' }}>
-                  <div className="" style={{ cursor: 'default', padding: '5px', paddingLeft: '10px', fontWeight: 600 }}>{userData[0]?.replace('_', " ")}</div>
-                  <div className="" style={{ cursor: 'default', padding: '5px', paddingLeft: '10px' }}>{userData[3] || "admin@gmail.com"}</div>
-                  <div className="dropdown-item" style={{ fontWeight: 600 }} onClick={() => navigate('/billing')}>Account & Billing</div>
-                  <div className="" style={{ cursor: 'default', padding: '5px', paddingLeft: '10px', fontWeight: 600 }}>{userData[2]} credits</div>
-                  <hr />
+                  {userData?.length > 1 && < div className="" style={{ cursor: 'default', padding: '5px', paddingLeft: '10px', fontWeight: 600 }}>{userData[0]?.replace('_', " ")}</div>
+                  }
+                  {userData?.length > 1 && <div className="" style={{ cursor: 'default', padding: '5px', paddingLeft: '10px' }}>{userData[3] || "admin@gmail.com"}</div>
+                  }
+                  {userData?.length > 1 && <div className="dropdown-item" style={{ fontWeight: 600 }} onClick={() => navigate('/billing')}>Account & Billing</div>
+                  }
+                  {userData?.length > 1 &&
+                    <div className="" style={{ cursor: 'default', padding: '5px', paddingLeft: '10px', fontWeight: 600 }}>{userData[2]} credits</div>
+                  }                  <hr />
                   <div className="dropdown-item" onClick={handleLogout}>Logout</div>
                 </div>
               )}
@@ -187,7 +218,7 @@ function NavbarV2() {
             </button>
           )}
         </div>
-      </nav>
+      </nav >
     </>
   );
 }

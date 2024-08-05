@@ -19,7 +19,7 @@ const Pricing = () => {
             list: [
                 { text: '5 Generations', status: true },
                 { text: 'High resolution outputs', status: false },
-                { text: 'DISAI watermark free', status: false },
+                { text: 'Otamat watermark free', status: false },
                 { text: 'Commercial License', status: false }
             ]
         },
@@ -32,7 +32,7 @@ const Pricing = () => {
             list: [
                 { text: '50 generations per month', status: true },
                 { text: 'High resolution outputs', status: true },
-                { text: 'DISAI watermark free', status: true },
+                { text: 'Otamat watermark free', status: true },
                 { text: 'Commercial License', status: false }
             ]
         },
@@ -45,7 +45,7 @@ const Pricing = () => {
             list: [
                 { text: '500 generations per month', status: true },
                 { text: 'High resolution outputs', status: true },
-                { text: 'DISAI watermark free', status: true },
+                { text: 'Otamat watermark free', status: true },
                 { text: 'Commercial License', status: true }
             ]
         }
