@@ -304,6 +304,8 @@ const GraphView = () => {
               width: "150px",
               marginLeft: "100px",
               marginTop: "2.7rem",
+              display: "flex",
+              justifyContent: "center",
             }}
             className="slider"
           >
@@ -333,6 +335,7 @@ const GraphView = () => {
                         position: "relative",
                         marginTop: "2rem",
                       }}
+                      className="right_side_items"
                     >
                       <span className="step-text">{item?.label}</span>
                       <span className="step-text">

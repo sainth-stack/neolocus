@@ -178,7 +178,7 @@
     flex-direction: column;
     background: rgb(255, 252, 245);
     position: absolute;
-    top: 60px;
+    top: 90px;
     right: 20px;
     width: calc(100% - 40px);
     border: 1px solid lightgrey;
