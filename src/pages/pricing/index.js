@@ -15,47 +15,47 @@ import "./pricing.css";
 const stripePromise = loadStripe("your-publishable-key-here");
 
 const Pricing = () => {
-  const [openPayment, setOpenPayment] = useState({});
-  const items = [
-    {
-      name: "Free Plan",
-      value: "$0",
-      btnText: "Current Plan",
-      desc: "No credit card required",
-      list: [
-        { text: "5 Generations", status: true },
-        { text: "High resolution outputs", status: false },
-        { text: "DISAI watermark free", status: false },
-        { text: "Commercial License", status: false },
-      ],
-    },
-    {
-      name: "Basic Plan",
-      value: "$5 /per month",
-      btnText: "Choose Basic Plan",
-      desc: "Cancel Anytime",
-      mostPopular: true,
-      list: [
-        { text: "50 generations per month", status: true },
-        { text: "High resolution outputs", status: true },
-        { text: "DISAI watermark free", status: true },
-        { text: "Commercial License", status: false },
-      ],
-    },
-    {
-      name: "Pro Plan",
-      value: "$10 /per month",
-      btnText: "Choose Pro Plan",
-      mostPopular: false,
-      desc: "Cancel Anytime",
-      list: [
-        { text: "500 generations per month", status: true },
-        { text: "High resolution outputs", status: true },
-        { text: "DISAI watermark free", status: true },
-        { text: "Commercial License", status: true },
-      ],
-    },
-  ];
+    const [openPayment, setOpenPayment] = useState({})
+    const items = [
+        {
+            name: 'Free Plan',
+            value: '$0',
+            btnText: 'Current Plan',
+            desc: "No credit card required",
+            list: [
+                { text: '5 Generations', status: true },
+                { text: 'High resolution outputs', status: false },
+                { text: 'Otamat watermark free', status: false },
+                { text: 'Commercial License', status: false }
+            ]
+        },
+        {
+            name: 'Basic Plan',
+            value: '$5 /per month',
+            btnText: 'Choose Basic Plan',
+            desc: "Cancel Anytime",
+            mostPopular: true,
+            list: [
+                { text: '50 generations per month', status: true },
+                { text: 'High resolution outputs', status: true },
+                { text: 'Otamat watermark free', status: true },
+                { text: 'Commercial License', status: false }
+            ]
+        },
+        {
+            name: 'Pro Plan',
+            value: '$10 /per month',
+            btnText: 'Choose Pro Plan',
+            mostPopular: false,
+            desc: "Cancel Anytime",
+            list: [
+                { text: '500 generations per month', status: true },
+                { text: 'High resolution outputs', status: true },
+                { text: 'Otamat watermark free', status: true },
+                { text: 'Commercial License', status: true }
+            ]
+        }
+    ];
 
   const handleCheckout = async (item) => {
     setOpenPayment({
