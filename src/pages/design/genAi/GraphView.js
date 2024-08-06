@@ -1,4 +1,4 @@
-import { Grid } from "@mui/material";
+import { Grid, useMediaQuery } from "@mui/material";
 import { useEffect, useState } from "react";
 import leftImage from "../../../assets/images/neolocus/living.png";
 import living from "../../../assets/images/neolocus/living.png";
@@ -22,6 +22,7 @@ import LinearWithValueLabel from "../../../components/loader/index";
 import { baseURL } from "../../../components/NavbarV2";
 import "./styles.css";
 const GraphView = () => {
+  const isSmallScreen = useMediaQuery('(max-width:600px)');
   const [search, setSearch] = useState("");
   const [question, setQuestion] = useState([]);
   const handleSend = () => {
@@ -39,7 +40,7 @@ const GraphView = () => {
 
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [img, setImage] = useState(null);
+  const [img, setImage] = useState();
   const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
     setFile(selectedFile);
@@ -282,7 +283,6 @@ const GraphView = () => {
       return selData.count ? false : true;
     } else return false;
   };
-
   return (
     <Grid>
       {!design && (
@@ -294,33 +294,34 @@ const GraphView = () => {
           <img
             className="main_image"
             src={selData?.roomImage ? selData?.roomImage : leftImage}
-            width={"35%"}
-            height={"0%"}
-            alt="image"
-            style={{ borderRadius: "10px", marginTop: "4rem" }}
+            // width={"40%"}
+            style={{ borderRadius: "10px", marginTop: "4rem", height: isSmallScreen ? '400px' : '600px' }}
+            alt="name"
           />
           <Grid
             style={{
-              width: "150px",
+              width: "250px",
               marginLeft: "100px",
-              marginTop: "2.7rem",
+              marginTop: "5rem",
               display: "flex",
               justifyContent: "center",
             }}
             className="slider"
           >
-            <div className="slide">
+            {!isSmallScreen && <div className="slide">
               <VerticalSlider {...{ activeStep, steps }} />
-            </div>
+            </div>}
           </Grid>
           <Grid
+            md={5}
+            marginTop={90}
             sx={{
               display: "flex",
               flexDirection: "column",
               width: "100%",
             }}
           >
-            <div style={{ height: "500px" }} className="items">
+            <div style={{ height: "500px", textAlign: 'center' }} className="items">
               {steps.map((item) => {
                 if (item.id == activeStep + 1) {
                   const isSelected = Object.keys(selData).filter(
@@ -461,7 +462,7 @@ const GraphView = () => {
         </Grid>
       )}
 
-      <Grid
+      {design && <Grid
         item
         md={7}
         padding={"10px"}
@@ -564,7 +565,7 @@ const GraphView = () => {
             )}
           </div>
         )}
-      </Grid>
+      </Grid>}
     </Grid>
   );
 };

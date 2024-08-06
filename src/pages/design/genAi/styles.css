@@ -84,7 +84,8 @@
     position: relative;
     top: -60rem;
     margin: 10px;
-    flex-direction: column;
+    display: flex;
+    flex-direction: row;
     align-items: center;
   }
 
@@ -116,14 +117,14 @@
     box-shadow: 1px 2px 3px gray;
   }
   .right_side_items {
-    display: flex;
-    position: relative;
-    top: -50rem;
+    display: flex !important;
+    position: relative !important;
+    top: -50rem !important;
   }
 }
 
 /* Ensure images scale properly */
-img {
+/* img {
   max-width: 100%;
   height: auto;
-}
+} */

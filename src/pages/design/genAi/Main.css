@@ -186,11 +186,11 @@ textarea {
 }
 
 .back-button-text {
-    width: 50%;
-    height: 48px;
-    padding: 9px;
-    border-radius: 27.28px;
-    border-width: 1.5px;
+    width: 50% !important;
+    height: 48px !important;
+    padding: 9px !important;
+    border-radius: 27.28px !important;
+    border-width: 1.5px !important;
     background-color: grey;
     border-color: rgb(33, 79, 65);
     display: flex;
@@ -200,14 +200,14 @@ textarea {
 }
 
 .next-button-text {
-    width: 50%;
-    height: 48px;
-    color: white;
-    padding: 9px;
-    border-radius: 27.28px;
-    border-width: 1.5px;
-    background-color: rgb(72, 136, 200);
-    border-color: rgb(72, 136, 200);
+    width: 50% !important;
+    height: 48px !important;
+    color: white !important;
+    padding: 9px !important;
+    border-radius: 27.28px !important;
+    border-width: 1.5px !important;
+    background-color: rgb(72, 136, 200) !important;
+    border-color: rgb(72, 136, 200) !important;
     display: flex;
     align-items: center;
     justify-content: center;

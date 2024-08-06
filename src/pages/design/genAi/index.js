@@ -14,10 +14,10 @@ import charcol from "../../../assets/images/neolocus/colors/charcol.png";
 import beige from "../../../assets/images/neolocus/colors/beige.png";
 import warm from "../../../assets/images/neolocus/colors/warm.png";
 import historical from "../../../assets/images/neolocus/colors/historical.png";
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 import axios from "axios";
 import "./Main.css";
-import ImageLoader from "./imageContainer";
 import LinearWithValueLabel from "../../../components/loader/index";
 import { baseURL } from "../../../components/NavbarV2";
 import { useUser } from "../../context/userContext";
@@ -25,6 +25,7 @@ import { Grid } from "@mui/material";
 import "./styles.css";
 // import gemini_icon from '../../assets/svg/gemini_icon.png'
 const GenAi = () => {
+  const isSmallScreen = useMediaQuery('(max-width:600px)');
   const [search, setSearch] = useState("");
   const [question, setQuestion] = useState([]);
   const handleSend = () => {
@@ -44,7 +45,7 @@ const GenAi = () => {
   const [file, setFile] = useState(null);
   const [startChart, setStartChart] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [img, setImage] = useState(contemporary);
+  const [img, setImage] = useState();
   const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
     setFile(selectedFile);
@@ -281,13 +282,14 @@ const GenAi = () => {
 
   return (
     <Grid
-      className="total_container"
       style={{
         width: "100%",
         display: "flex",
         justifyContent: "center",
         alignItems: "start",
+        flexDirection: isSmallScreen ? 'column' : 'row',
       }}
+      className={`total_container`}
     >
       <Grid
         item
@@ -298,10 +300,11 @@ const GenAi = () => {
           borderRight: { md: "1px solid grey", xs: "none" },
           width: { md: "450px", xs: "100%" },
           marginBottom: { xs: "20px", md: "0" },
+          height: { xs: "auto", md: "85vh" }
         }}
       >
         <div
-          style={{ padding: "12px", marginTop: "4rem", marginLeft: "-.4rem" }}
+          style={{ padding: "12px", marginTop: isSmallScreen ? "0rem" : "2rem" }}
           className="container"
         >
           {/* <h1 style={{ fontSize: '20px', fontWeight: 500 }}>Upload File</h1> */}
@@ -480,8 +483,8 @@ const GenAi = () => {
           width: "100%",
           height: "88vh",
           overflow: "auto",
-
           marginTop: "0",
+          display: !isSmallScreen ?'flex' :"block", alignItems: !isSmallScreen ? 'center' : 'start', justifyContent: !isSmallScreen ? 'center' : 'start'
         }}
       >
         {loading && !imgsLoaded ? (
