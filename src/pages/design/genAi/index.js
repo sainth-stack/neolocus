@@ -14,7 +14,7 @@ import charcol from "../../../assets/images/neolocus/colors/charcol.png";
 import beige from "../../../assets/images/neolocus/colors/beige.png";
 import warm from "../../../assets/images/neolocus/colors/warm.png";
 import historical from "../../../assets/images/neolocus/colors/historical.png";
-import useMediaQuery from '@mui/material/useMediaQuery';
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 import axios from "axios";
 import "./Main.css";
@@ -25,7 +25,7 @@ import { Grid } from "@mui/material";
 import "./styles.css";
 // import gemini_icon from '../../assets/svg/gemini_icon.png'
 const GenAi = () => {
-  const isSmallScreen = useMediaQuery('(max-width:600px)');
+  const isSmallScreen = useMediaQuery("(max-width:600px)");
   const [search, setSearch] = useState("");
   const [question, setQuestion] = useState([]);
   const handleSend = () => {
@@ -287,7 +287,7 @@ const GenAi = () => {
         display: "flex",
         justifyContent: "center",
         alignItems: "start",
-        flexDirection: isSmallScreen ? 'column' : 'row',
+        flexDirection: isSmallScreen ? "column" : "row",
       }}
       className={`total_container`}
     >
@@ -300,11 +300,14 @@ const GenAi = () => {
           borderRight: { md: "1px solid grey", xs: "none" },
           width: { md: "450px", xs: "100%" },
           marginBottom: { xs: "20px", md: "0" },
-          height: { xs: "auto", md: "85vh" }
+          height: { xs: "auto", md: "85vh" },
         }}
       >
         <div
-          style={{ padding: "12px", marginTop: isSmallScreen ? "0rem" : "2rem" }}
+          style={{
+            padding: "12px",
+            marginTop: isSmallScreen ? "0rem" : "2rem",
+          }}
           className="container"
         >
           {/* <h1 style={{ fontSize: '20px', fontWeight: 500 }}>Upload File</h1> */}
@@ -428,7 +431,7 @@ const GenAi = () => {
                     : "Upgrade to premium to get more credits "
                 }
                 id="uploadButton"
-                className="btn btn-primary "
+                className="btn btn-primary"
                 disabled={
                   userData?.length > 2 && userData[2] > 0 ? false : true
                 }
@@ -438,6 +441,8 @@ const GenAi = () => {
                   justifyContent: "center",
                   alignItems: "center",
                   marginTop: "10px",
+                  boxShadow: "1px 2px 3px gray ",
+                  cursor: "pointer",
                 }}
               >
                 Generate
@@ -484,7 +489,9 @@ const GenAi = () => {
           height: "88vh",
           overflow: "auto",
           marginTop: "0",
-          display: !isSmallScreen ?'flex' :"block", alignItems: !isSmallScreen ? 'center' : 'start', justifyContent: !isSmallScreen ? 'center' : 'start'
+          display: !isSmallScreen ? "flex" : "block",
+          alignItems: !isSmallScreen ? "center" : "start",
+          justifyContent: !isSmallScreen ? "center" : "start",
         }}
       >
         {loading && !imgsLoaded ? (

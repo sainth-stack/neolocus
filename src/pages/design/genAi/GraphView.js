@@ -230,8 +230,13 @@ const GraphView = () => {
       selected: "",
       list: [
         { color: "rgb(153, 204, 255)", text: 1 },
-        // { color: 'rgb(102, 170, 229)', text: 2 },
-        // { color: 'rgb(72, 136, 200)', text: 3 }
+        { color: "rgb(52, 136, 200)", text: 3 },
+        { color: "rgb(200, 153, 255)", text: 2 },
+        { color: "rgb(136, 52, 200)", text: 4 },
+        { color: "rgb(255, 204, 153)", text: 5 },
+        { color: "rgb(200, 136, 52)", text: 6 },
+        { color: "rgb(153, 255, 204)", text: 7 },
+        { color: "rgb(52, 200, 136)", text: 8 },
       ],
     },
   ];
@@ -333,7 +338,7 @@ const GraphView = () => {
               className="items"
             >
               {steps.map((item) => {
-                if (item.id == activeStep + 1) {
+                if (item.id === activeStep + 1) {
                   const isSelected = Object.keys(selData).filter(
                     (key) => key === item.type
                   );
@@ -534,7 +539,7 @@ const GraphView = () => {
                     <button
                       className="btn btn-primary"
                       onClick={() => {
-                        handleReset();
+                        //handleReset();
                       }}
                       style={{
                         display: "flex",
@@ -548,7 +553,7 @@ const GraphView = () => {
                   </div>
                 </div>
               )}
-              {img == null && imgsLoaded && (
+              {img === null && imgsLoaded && (
                 <div
                   style={{
                     display: "flex",

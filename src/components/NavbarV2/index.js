@@ -10,7 +10,7 @@ import { useUser } from "../../pages/context/userContext";
 export const baseURL = "https://maya.otamat.com/api";
 
 function NavbarV2() {
-  const isSmallScreen = useMediaQuery('(max-width:600px)');
+  const isSmallScreen = useMediaQuery("(max-width:600px)");
   const navigate = useNavigate();
   const location = useLocation();
   const dropdownRef = useRef(null);
@@ -81,6 +81,15 @@ function NavbarV2() {
     }
   };
 
+  const handleNavigate = (pathname) => {
+    const confirmation = window.confirm(
+      "Are you sure you want to Navigate To other Page?"
+    );
+    if (confirmation) {
+      navigate(pathname);
+    }
+    /* navigate("/start-design"); */
+  };
   useEffect(() => {
     getUserInfo();
   }, [userName]);
@@ -105,8 +114,8 @@ function NavbarV2() {
         <div className="navbar-container">
           <div className="logo-container">
             <img src={Logo} alt="logo" />
-            <h1>Maya</h1>
-            {(isLogin && !isSmallScreen) && (
+            <h1>May</h1>
+            {isLogin && !isSmallScreen && (
               <Tabs
                 value={currentTab}
                 onChange={handleTabChange}
@@ -149,7 +158,7 @@ function NavbarV2() {
             <MenuIcon />
           </button>
           <div className={`menu-items ${menuOpen ? "active" : ""}`}>
-            {(isLogin && isSmallScreen) && (
+            {isLogin && isSmallScreen && (
               <Tabs
                 value={currentTab}
                 onChange={handleTabChange}
@@ -191,7 +200,7 @@ function NavbarV2() {
               {isLogin && (
                 <p
                   onClick={() => {
-                    navigate("/start-design");
+                    handleNavigate("start-design");
                   }}
                 >
                   Start Designing
@@ -199,7 +208,7 @@ function NavbarV2() {
               )}
               <p
                 onClick={() => {
-                  navigate("/pricing");
+                  handleNavigate("/pricing");
                 }}
               >
                 Pricing
@@ -237,7 +246,9 @@ function NavbarV2() {
                       {userData?.length > 1 && (
                         <div
                           className="dropdown-item"
-                          onClick={() => navigate("/billing")}
+                          onClick={() => {
+                            handleNavigate("/billing");
+                          }}
                         >
                           Account & Billing
                         </div>
