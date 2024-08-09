@@ -509,7 +509,7 @@ const GraphView = () => {
                 >
                   <img src={img} alt="new" style={{ width: "100%" }} />
                   <div style={{ display: "flex", gap: "5px" }}>
-                    <button
+                    {/* <button
                       className="btn btn-primary"
                       onClick={() => {
                         sendEmailToUser(img);
@@ -522,7 +522,7 @@ const GraphView = () => {
                       }}
                     >
                       Email Me
-                    </button>
+                    </button> */}
                     <button
                       className="btn btn-primary"
                       onClick={() => {

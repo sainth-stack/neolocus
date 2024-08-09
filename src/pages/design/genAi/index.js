@@ -447,7 +447,7 @@ const GenAi = () => {
               >
                 Generate
               </button>
-              {img !== null && imgsLoaded && (
+              {/* {img !== null && imgsLoaded && (
                 <button
                   id="uploadButton"
                   className="btn btn-primary"
@@ -461,7 +461,7 @@ const GenAi = () => {
                 >
                   Send Email
                 </button>
-              )}
+              )} */}
               {img !== null && imgsLoaded && (
                 <button
                   id="uploadButton"

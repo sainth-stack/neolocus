@@ -114,7 +114,7 @@ function NavbarV2() {
         <div className="navbar-container">
           <div className="logo-container">
             <img src={Logo} alt="logo" />
-            <h1>May</h1>
+            <h1>Maya</h1>
             {isLogin && !isSmallScreen && (
               <Tabs
                 value={currentTab}

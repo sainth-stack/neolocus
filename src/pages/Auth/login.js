@@ -18,12 +18,12 @@ export const Login = () => {
   /* const [email, setEmail] = useState("info@desai.net");
    */
 
-  const [email, setEmail] = useState("username");
+  const [email, setEmail] = useState("");
   /*   const [password, setPassword] = useState("Keypulse@123");
 
 */
 
-  const [password, setPassword] = useState("Test@123");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const { userData, setUserData } = useUser();
   const googleLoginURL = `${baseURL}/googlelogin`;
@@ -225,7 +225,7 @@ export const Login = () => {
                   name="email"
                   autoComplete="off"
                   value={email}
-                  readOnly
+                  // readOnly
                   required
                   onChange={(e) => setEmail(e.target.value)}
                   // onFocus={() => setMessage("")}
@@ -246,7 +246,7 @@ export const Login = () => {
                   value={password}
                   // maxLength={16}
                   // minLength={8}
-                  required
+                  // required
                   onChange={(e) => setPassword(e.target.value)}
                   // onFocus={() => setMessage("")}
                 />
