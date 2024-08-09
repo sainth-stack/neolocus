@@ -1,4 +1,4 @@
-import { Grid } from "@mui/material";
+import { Grid, useMediaQuery } from "@mui/material";
 import { useEffect, useState } from "react";
 /*  */
 import leftImage from "../../../assets/images/neolocus/living.png";
@@ -23,6 +23,7 @@ import LinearWithValueLabel from "../../../components/loader/index";
 import { baseURL } from "../../../components/NavbarV2";
 import "./styles.css";
 const GraphView = () => {
+  const isSmallScreen = useMediaQuery("(max-width:600px)");
   const [search, setSearch] = useState("");
   const [question, setQuestion] = useState([]);
   const handleSend = () => {
@@ -40,7 +41,7 @@ const GraphView = () => {
 
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [img, setImage] = useState(null);
+  const [img, setImage] = useState();
   const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
     setFile(selectedFile);
@@ -230,8 +231,13 @@ const GraphView = () => {
       selected: "",
       list: [
         { color: "rgb(153, 204, 255)", text: 1 },
-        // { color: 'rgb(102, 170, 229)', text: 2 },
-        // { color: 'rgb(72, 136, 200)', text: 3 }
+        { color: "rgb(52, 136, 200)", text: 3 },
+        { color: "rgb(200, 153, 255)", text: 2 },
+        { color: "rgb(136, 52, 200)", text: 4 },
+        { color: "rgb(255, 204, 153)", text: 5 },
+        { color: "rgb(200, 136, 52)", text: 6 },
+        { color: "rgb(153, 255, 204)", text: 7 },
+        { color: "rgb(52, 200, 136)", text: 8 },
       ],
     },
   ];
@@ -283,7 +289,6 @@ const GraphView = () => {
       return selData.count ? false : true;
     } else return false;
   };
-
   return (
     <Grid>
       {!design && (
@@ -295,33 +300,46 @@ const GraphView = () => {
           <img
             className="main_image"
             src={selData?.roomImage ? selData?.roomImage : leftImage}
-            width={"35%"}
-            height={"0%"}
-            alt="image"
-            style={{ borderRadius: "10px", marginTop: "4rem" }}
+            // width={"40%"}
+            style={{
+              borderRadius: "10px",
+              marginTop: "4rem",
+              height: isSmallScreen ? "400px" : "600px",
+            }}
+            alt="name"
           />
           <Grid
             style={{
-              width: "150px",
+              width: "250px",
               marginLeft: "100px",
-              marginTop: "2.7rem",
+              marginTop: "5rem",
+              display: "flex",
+              justifyContent: "center",
             }}
             className="slider"
           >
-            <div className="slide">
-              <VerticalSlider {...{ activeStep, steps }} />
-            </div>
+            {!isSmallScreen && (
+              <div className="slide">
+                <VerticalSlider {...{ activeStep, steps }} />
+              </div>
+            )}
           </Grid>
           <Grid
+            md={5}
+            //marginTop={90}
             sx={{
               display: "flex",
               flexDirection: "column",
               width: "100%",
             }}
+            className="right_side"
           >
-            <div style={{ height: "500px" }} className="items">
+            <div
+              style={{ height: "500px", textAlign: "center" }}
+              className="items"
+            >
               {steps.map((item) => {
-                if (item.id == activeStep + 1) {
+                if (item.id === activeStep + 1) {
                   const isSelected = Object.keys(selData).filter(
                     (key) => key === item.type
                   );
@@ -334,6 +352,7 @@ const GraphView = () => {
                         position: "relative",
                         marginTop: "2rem",
                       }}
+                      className="right_side_items"
                     >
                       <span className="step-text">{item?.label}</span>
                       <span className="step-text">
@@ -459,64 +478,92 @@ const GraphView = () => {
         </Grid>
       )}
 
-      <Grid
-        item
-        md={7}
-        padding={"10px"}
-        sx={{
-          width: "100%",
-          height: "88vh",
-          overflow: "auto",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        {loading || !imgsLoaded ? (
-          <LinearWithValueLabel loading={loading || !imgsLoaded} />
-        ) : (
-          <div>
-            {/* <h2>Deisgn</h2> */}
-            {img !== null && imgsLoaded && (
-              <div
-                style={{
-                  width: "100%",
-                  display: "flex",
-                  justifyContent: "center",
-                  flexDirection: "column",
-                }}
-              >
-                <img src={img} alt="new" style={{ width: "100%" }} />
-                <div style={{ display: "flex", gap: "5px" }}>
-                  <button
-                    className="btn btn-primary"
-                    onClick={() => {
-                      sendEmailToUser(img);
-                    }}
-                    style={{
-                      display: "flex",
-                      justifyContent: "center",
-                      marginTop: "10px",
-                      width: "fit-content",
-                    }}
-                  >
-                    Email Me
-                  </button>
-                  <button
-                    className="btn btn-primary"
-                    onClick={() => {
-                      handleUpload2(img);
-                    }}
-                    style={{
-                      display: "flex",
-                      justifyContent: "center",
-                      marginTop: "10px",
-                      width: "fit-content",
-                    }}
-                  >
-                    Download
-                  </button>
+      {design && (
+        <Grid
+          item
+          md={7}
+          padding={"10px"}
+          sx={{
+            width: "100%",
+            height: "88vh",
+            overflow: "auto",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          {loading || !imgsLoaded ? (
+            <LinearWithValueLabel loading={loading || !imgsLoaded} />
+          ) : (
+            <div>
+              {/* <h2>Deisgn</h2> */}
+              {img !== null && imgsLoaded && (
+                <div
+                  style={{
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "center",
+                    flexDirection: "column",
+                  }}
+                >
+                  <img src={img} alt="new" style={{ width: "100%" }} />
+                  <div style={{ display: "flex", gap: "5px" }}>
+                    <button
+                      className="btn btn-primary"
+                      onClick={() => {
+                        sendEmailToUser(img);
+                      }}
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        marginTop: "10px",
+                        width: "fit-content",
+                      }}
+                    >
+                      Email Me
+                    </button>
+                    <button
+                      className="btn btn-primary"
+                      onClick={() => {
+                        handleUpload2(img);
+                      }}
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        marginTop: "10px",
+                        width: "fit-content",
+                      }}
+                    >
+                      Download
+                    </button>
+                    <button
+                      className="btn btn-primary"
+                      onClick={() => {
+                        //handleReset();
+                      }}
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        marginTop: "10px",
+                        width: "fit-content",
+                      }}
+                    >
+                      Generate New Design
+                    </button>
+                  </div>
+                </div>
+              )}
+              {img === null && imgsLoaded && (
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  Please Try Again in some time
                   <button
                     className="btn btn-primary"
                     onClick={() => {
@@ -529,40 +576,14 @@ const GraphView = () => {
                       width: "fit-content",
                     }}
                   >
-                    Generate New Design
+                    Try Again
                   </button>
                 </div>
-              </div>
-            )}
-            {img == null && imgsLoaded && (
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                Please Try Again in some time
-                <button
-                  className="btn btn-primary"
-                  onClick={() => {
-                    handleReset();
-                  }}
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    marginTop: "10px",
-                    width: "fit-content",
-                  }}
-                >
-                  Try Again
-                </button>
-              </div>
-            )}
-          </div>
-        )}
-      </Grid>
+              )}
+            </div>
+          )}
+        </Grid>
+      )}
     </Grid>
   );
 };

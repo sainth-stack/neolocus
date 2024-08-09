@@ -155,9 +155,9 @@ export const Register = () => {
                 {error}
               </div>
               <button
-                className="btn btn-primary w-100 text-white border-0 mt-4"
+                className="btn  w-100 text-white border-0 mt-4"
                 style={{
-                  background: "rgb(72, 136, 200)",
+                  background: "#4887c7",
                   borderRadius: "40px",
                   height: "40px",
                 }}

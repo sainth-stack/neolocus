@@ -1,15 +1,16 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { Tab, Tabs } from "@mui/material";
+import { Tab, Tabs, useMediaQuery } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu"; // Import the MenuIcon
 import Logo from "../../assets/images/logo.jpg";
 import avatar from "../../assets/svg/avatar.svg";
 import "./styles.css";
 import axios from "axios";
 import { useUser } from "../../pages/context/userContext";
-export const baseURL = "https://otamat.com/api";
+export const baseURL = "https://maya.otamat.com/api";
 
 function NavbarV2() {
+  const isSmallScreen = useMediaQuery("(max-width:600px)");
   const navigate = useNavigate();
   const location = useLocation();
   const dropdownRef = useRef(null);
@@ -80,6 +81,15 @@ function NavbarV2() {
     }
   };
 
+  const handleNavigate = (pathname) => {
+    const confirmation = window.confirm(
+      "Are you sure you want to Navigate To other Page?"
+    );
+    if (confirmation) {
+      navigate(pathname);
+    }
+    /* navigate("/start-design"); */
+  };
   useEffect(() => {
     getUserInfo();
   }, [userName]);
@@ -104,13 +114,51 @@ function NavbarV2() {
         <div className="navbar-container">
           <div className="logo-container">
             <img src={Logo} alt="logo" />
-            <h1>Maya</h1>
+            <h1>May</h1>
+            {isLogin && !isSmallScreen && (
+              <Tabs
+                value={currentTab}
+                onChange={handleTabChange}
+                sx={{
+                  marginTop: "10px",
+                  marginBottom: "10px",
+                  "& .MuiTabs-flexContainer": {
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "baseline",
+                  },
+                  "& .MuiTab-root": {
+                    textTransform: "none",
+                    fontSize: "16px",
+                    fontWeight: "400",
+                    lineHeight: "24px",
+                    fontFamily: "Poppins",
+                    color: "#242424",
+                    margin: "4px",
+                    padding: "4px 10px",
+                    ":hover": {
+                      background: "#E6EDF5",
+                    },
+                  },
+                  "& .Mui-selected": {
+                    fontWeight: 700,
+                  },
+                  svg: {
+                    width: 16,
+                    height: 16,
+                  },
+                }}
+              >
+                <Tab label="Text View" />
+                <Tab label="Graphical View" />
+              </Tabs>
+            )}
           </div>
           <button className="menu-icon" onClick={() => setMenuOpen(!menuOpen)}>
             <MenuIcon />
           </button>
           <div className={`menu-items ${menuOpen ? "active" : ""}`}>
-            {isLogin && (
+            {isLogin && isSmallScreen && (
               <Tabs
                 value={currentTab}
                 onChange={handleTabChange}
@@ -152,7 +200,7 @@ function NavbarV2() {
               {isLogin && (
                 <p
                   onClick={() => {
-                    navigate("/start-design");
+                    handleNavigate("start-design");
                   }}
                 >
                   Start Designing
@@ -160,7 +208,7 @@ function NavbarV2() {
               )}
               <p
                 onClick={() => {
-                  navigate("/pricing");
+                  handleNavigate("/pricing");
                 }}
               >
                 Pricing
@@ -198,7 +246,9 @@ function NavbarV2() {
                       {userData?.length > 1 && (
                         <div
                           className="dropdown-item"
-                          onClick={() => navigate("/billing")}
+                          onClick={() => {
+                            handleNavigate("/billing");
+                          }}
                         >
                           Account & Billing
                         </div>

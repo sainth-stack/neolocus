@@ -1,22 +1,29 @@
-
 import eye from "../../assets/svg/eye-fill.svg";
+import axios from "axios";
 import eye2 from "../../assets/svg/eye-slash.svg";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { LoadingIndicator } from "../../components/loader";
 import "./styles.css";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import { useGoogleLogin } from "@react-oauth/google";
 import { useUser } from "../context/userContext";
 import { baseURL } from "../const";
 import bedroom from "../../assets/images/neolocus/bedroom.png";
 import "../../components/styles/login.css";
+
 export const Login = () => {
   const [loading, setLoading] = useState(false);
   const [toggle2, setToggle2] = useState(false);
-  const [email, setEmail] = useState("info@desai.net");
-  const [password, setPassword] = useState("Keypulse@123");
+  /* const [email, setEmail] = useState("info@desai.net");
+   */
+
+  const [email, setEmail] = useState("username");
+  /*   const [password, setPassword] = useState("Keypulse@123");
+
+*/
+
+  const [password, setPassword] = useState("Test@123");
   const [error, setError] = useState("");
   const { userData, setUserData } = useUser();
   const googleLoginURL = `${baseURL}/googlelogin`;
@@ -139,7 +146,7 @@ export const Login = () => {
       <div
         className="col-md-6 pt-4 pb-4"
         style={{
-          height: "90vh",
+          height: "100vh",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
@@ -151,7 +158,7 @@ export const Login = () => {
       >
         <h5
           className="sm:text-danger title font-weight-bold mt-2 text-light container text-center"
-          style={{ fontSize: "7rem", width: "90%" }}
+          style={{ fontSize: "4.3rem", width: "90%" }}
         >
           Generate Room designs in Seconds
         </h5>
@@ -195,7 +202,9 @@ export const Login = () => {
               }}
             >
               <div className="border-top"></div>
-              <div style={{ width: "100%" }}>OR CONTINUE WITH</div>
+              <div style={{ width: "100%" }} className="text-lowercase">
+                OR CONTINUE WITH
+              </div>
               <div className="border-top"></div>
             </div>
             <h2 className="mb-1">{"Login"}</h2>
@@ -216,6 +225,7 @@ export const Login = () => {
                   name="email"
                   autoComplete="off"
                   value={email}
+                  readOnly
                   required
                   onChange={(e) => setEmail(e.target.value)}
                   // onFocus={() => setMessage("")}
@@ -275,13 +285,13 @@ export const Login = () => {
                 type={loading ? "button" : "submit"}
                 disabled={loading}
               >
-                {loading ? "Logging in..." : "Sigin"}{" "}
+                {loading ? "Logging in..." : "SIGN IN"}{" "}
                 {loading ? <LoadingIndicator size={"1"} /> : null}
               </button>
             </form>
-            <div className="account2 mt-2">{"Don't Have An Account?"}</div>
+            <div className="account2 mt-2">{"Don't have an account?"}</div>
             <Link to="/register" className="text-decoration-none register2">
-              <span> {"Register"}</span>
+              <span className="btn "> {"Register"}</span>
             </Link>
           </div>
         </div>
