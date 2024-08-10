@@ -8,15 +8,15 @@ const VerticalStepper = ({ activeStep, steps = [] }) => {
 
 
   return (
-    <Grid container height={"100vh"}>
+    <Grid container height={"80vh"}>
       <Grid item xs={2} sx={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         {steps.map((step, index) => (
           <div style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center' }}>
             <Box
               key={index}
               sx={{
-                width: '30px',
-                height: '30px',
+                width: '32px',
+                height: '32px',
                 backgroundColor: index === activeStep ? 'rgb(72, 136, 200)' : (index < activeStep ? 'rgb(72, 136, 200)' : '#C2C2C2'),
                 borderRadius: '50%',
                 display: 'flex',
@@ -43,8 +43,8 @@ const VerticalStepper = ({ activeStep, steps = [] }) => {
                 />
               )}
             </Box>
-            {index !== 3 &&
-              <div style={{ background: index < activeStep ? 'rgb(72, 136, 200)' : 'lightgrey', height: '120px', width: '10px', display: 'flex', justifyContent: 'center', borderRadius: '5px' }}></div>
+            {index !== 2 &&
+              <div style={{ background: index < activeStep ? 'rgb(72, 136, 200)' : 'lightgrey', height: '180px', width: '10px', display: 'flex', justifyContent: 'center', borderRadius: '5px' }}></div>
             }          </div>
         ))}
       </Grid>

@@ -82,12 +82,13 @@ function NavbarV2() {
   };
 
   const handleNavigate = (pathname) => {
-    const confirmation = window.confirm(
-      "Are you sure you want to Navigate To other Page?"
-    );
-    if (confirmation) {
-      navigate(pathname);
-    }
+    // const confirmation = window.confirm(
+    //   "Are you sure you want to Navigate To other Page?"
+    // );
+    // if (confirmation) {
+    //   navigate(pathname);
+    // }
+    navigate(pathname);
     /* navigate("/start-design"); */
   };
   useEffect(() => {

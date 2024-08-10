@@ -51,7 +51,7 @@ const GraphView = () => {
     selected_style: "",
     selected_room_color: "",
     selected_room_type: "",
-    number_of_room_designs: "",
+    number_of_room_designs: "1",
     additional_instructions: "",
   });
 
@@ -60,7 +60,7 @@ const GraphView = () => {
     room: "living room",
     style: "",
     color: "",
-    count: "",
+    count: "1",
   };
 
   const [selData, setSelData] = useState(inData);
@@ -224,22 +224,22 @@ const GraphView = () => {
         { text: "historical romance", image: historical },
       ],
     },
-    {
-      label: "Step 4",
-      id: 4,
-      type: "count",
-      selected: "",
-      list: [
-        { color: "rgb(153, 204, 255)", text: 1 },
-        { color: "rgb(52, 136, 200)", text: 3 },
-        { color: "rgb(200, 153, 255)", text: 2 },
-        { color: "rgb(136, 52, 200)", text: 4 },
-        { color: "rgb(255, 204, 153)", text: 5 },
-        { color: "rgb(200, 136, 52)", text: 6 },
-        { color: "rgb(153, 255, 204)", text: 7 },
-        { color: "rgb(52, 200, 136)", text: 8 },
-      ],
-    },
+    // {
+    //   label: "Step 4",
+    //   id: 4,
+    //   type: "count",
+    //   selected: "",
+    //   list: [
+    //     { color: "rgb(153, 204, 255)", text: 1 },
+    //     { color: "rgb(52, 136, 200)", text: 3 },
+    //     { color: "rgb(200, 153, 255)", text: 2 },
+    //     { color: "rgb(136, 52, 200)", text: 4 },
+    //     { color: "rgb(255, 204, 153)", text: 5 },
+    //     { color: "rgb(200, 136, 52)", text: 6 },
+    //     { color: "rgb(153, 255, 204)", text: 7 },
+    //     { color: "rgb(52, 200, 136)", text: 8 },
+    //   ],
+    // },
   ];
 
   const handleSelectImage = (item, type) => {
@@ -335,7 +335,7 @@ const GraphView = () => {
             className="right_side"
           >
             <div
-              style={{ height: "500px", textAlign: "center" }}
+              style={{ height: "500px", textAlign: "center",display:'flex',justifyContent:'center' }}
               className="items"
             >
               {steps.map((item) => {
@@ -358,7 +358,7 @@ const GraphView = () => {
                       <span className="step-text">
                         Choose your {item?.type}
                       </span>
-                      <div style={{ width: "500px" }}>
+                      <div style={{ width: "calc(100vh - 300px)" }}>
                         <div
                           style={{
                             display: "flex",
@@ -469,9 +469,9 @@ const GraphView = () => {
                 className="next-button-text btn"
                 disabled={getDisabled(activeStep)}
                 style={{ opacity: getDisabled(activeStep) ? 0.5 : 1 }}
-                onClick={() => (activeStep < 3 ? nextStep() : handleUpload())}
+                onClick={() => (activeStep < 2 ? nextStep() : handleUpload())}
               >
-                {activeStep > 2 ? "Generate" : "NEXT"}
+                {activeStep > 1 ? "Generate" : "NEXT"}
               </button>
             </div>
           </Grid>
@@ -540,7 +540,7 @@ const GraphView = () => {
                     <button
                       className="btn btn-primary"
                       onClick={() => {
-                        //handleReset();
+                        handleReset();
                       }}
                       style={{
                         display: "flex",
