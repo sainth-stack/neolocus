@@ -184,9 +184,11 @@ const GenAi = () => {
 
   const data2 = [
     { label: "Select", value: "" },
-    { label: "Red", value: "Red" },
+    { label: "White", value: "White" },
+    { label: "Gold", value: "Gold" },
     { label: "Brown", value: "Brown" },
-    { label: "Green", value: "Green" },
+    { label: "Light", value: "Light" },
+    { label: "Dark", value: "Dark" },
   ];
 
   const data3 = [
