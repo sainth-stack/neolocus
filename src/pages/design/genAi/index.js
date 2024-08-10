@@ -401,8 +401,9 @@ const GenAi = () => {
                         padding: "8px",
                         fontSize: "16px",
                         fontFamily: "Arial, sans-serif",
-                        backgroundColor: "#fff",
+                        // backgroundColor: "#fff",
                         color: "#333",
+                        backgroundColor: (option.value === "White" || option.value === "Gold" || option.value === "") ? "#FFF" : 'lightGrey'
                       }}
                       value={option.value}
                       disabled={option.value !== "White" && option.value !== "Gold"} // Disable all except White and Gold
