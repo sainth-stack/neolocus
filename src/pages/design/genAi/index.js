@@ -191,12 +191,6 @@ const GenAi = () => {
     { label: "Dark", value: "Dark" },
   ];
 
-  const data3 = [
-    { label: "Select", value: "" },
-    { label: "1", value: "1" },
-    { label: "2", value: "2" },
-    { label: "3", value: "3" },
-  ];
 
   const styleData = [
     { label: "Select", value: "" },
@@ -402,7 +396,7 @@ const GenAi = () => {
                 >
                   {data2.map((option) => (
                     <option
-                      key={option.label}
+                      key={option.value}
                       style={{
                         padding: "8px",
                         fontSize: "16px",
@@ -411,11 +405,13 @@ const GenAi = () => {
                         color: "#333",
                       }}
                       value={option.value}
+                      disabled={option.value !== "White" && option.value !== "Gold"} // Disable all except White and Gold
                     >
                       {option.label}
                     </option>
                   ))}
                 </select>
+
               </div>
             </div>
 
