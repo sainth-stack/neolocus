@@ -537,7 +537,7 @@ const GraphView = () => {
                     >
                       Download
                     </button>
-                    <button
+                    {/* <button
                       className="btn btn-primary"
                       onClick={() => {
                         handleReset();
@@ -550,7 +550,7 @@ const GraphView = () => {
                       }}
                     >
                       Generate New Design
-                    </button>
+                    </button> */}
                   </div>
                 </div>
               )}
